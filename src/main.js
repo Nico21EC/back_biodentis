@@ -3,7 +3,7 @@ const port = process.env.PORT || 3001;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 
 const cors= require('cors');
 const bodyParse=require('body-parser');
@@ -26,7 +26,7 @@ app.use(bodyParse.json());
 );
 
 */
-const router = express.Router();
+//const router = express.Router();
 
 app.use(cors());
 app.use(express.json());
