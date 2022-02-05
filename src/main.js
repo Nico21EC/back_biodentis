@@ -31,7 +31,7 @@ app.use(bodyParse.json());
 app.use(cors());
 app.use(express.json());
 
-app.use('/api',router);
+//app.use('/api',router);
 /*
 const loginRoute = require("./routes/login/loginRoute");
 const sucuRoute=require('./routes/sucursales/sucursalesRoute');
