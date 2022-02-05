@@ -5,18 +5,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const mongoose = require('mongoose');
 
-const loginRoute = require("./routes/login/loginRoute");
-const sucuRoute=require('./routes/sucursales/sucursalesRoute');
-const citaRoute=require('./routes/cita/citaRoute');
-const pacienteRoute=require('./routes/paciente/pacienteRoute');
-const diagnosticoRoute=require('./routes/diagnostico/diagnosticoRoute');
-const historiaClinicaRoute=require('./routes/historiaClinica/historiaClinicaRoute');
-const odontogramaRoute=require('./routes/odontograma/odontogramaRouter');
-const piezaRoute=require('./routes/odontograma/piezaRoute');
-const recetaRoute=require('./routes/receta/recetaRoute');
-const tratamientoRoute=require('./routes/tratamiento/tratamientoRoute');
-const reservaRoute=require('./routes/reserva/reservaRoute');
-
 const cors= require('cors');
 const bodyParse=require('body-parser');
 
@@ -43,6 +31,18 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api',router);
+/*
+const loginRoute = require("./routes/login/loginRoute");
+const sucuRoute=require('./routes/sucursales/sucursalesRoute');
+const citaRoute=require('./routes/cita/citaRoute');
+const pacienteRoute=require('./routes/paciente/pacienteRoute');
+const diagnosticoRoute=require('./routes/diagnostico/diagnosticoRoute');
+const historiaClinicaRoute=require('./routes/historiaClinica/historiaClinicaRoute');
+const odontogramaRoute=require('./routes/odontograma/odontogramaRouter');
+const piezaRoute=require('./routes/odontograma/piezaRoute');
+const recetaRoute=require('./routes/receta/recetaRoute');
+const tratamientoRoute=require('./routes/tratamiento/tratamientoRoute');
+const reservaRoute=require('./routes/reserva/reservaRoute');
 
 loginRoute(router);
 sucuRoute(router);
@@ -55,7 +55,7 @@ piezaRoute(router)
 recetaRoute(router);
 tratamientoRoute(router);
 reservaRoute(router);
-
+*/
 
 app.get("/", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
