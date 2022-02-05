@@ -1,4 +1,4 @@
-const Receta=require('../../controllers/receta/recetaController');
+const Receta=require('../../controllers/receta/recetaController.ts');
 
 module.exports = (router) =>{
     router.post('/crearReceta', Receta.createReceta);

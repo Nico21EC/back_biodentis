@@ -1,11 +1,12 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
-import * as moment from 'moment';
+//import { request, response } from "express";
+const response16 = require("express");
+//import mongoose, { Schema } from 'mongoose';
+//import * as moment from 'moment';
+const moment = require("moment");
 'üse strict'
 
 
-var Esquema = require('../../model/reserva/reservaModel');
-
+var Esquema = require('../../model/reserva/reservaModel.ts');
 
 exports.createReserva = (req, res) => {
     console.log(req.body)
@@ -13,8 +14,7 @@ exports.createReserva = (req, res) => {
     const reservanew = new Esquema();
     console.log(req.body)
     reservanew.fecha =  moment(req.body.fecha).format('LLL');
-    
-    
+
     reservanew.motivo = req.body.motivo;
     reservanew.nombre = req.body.nombre;
     reservanew.apellido = req.body.apellido;
@@ -39,7 +39,7 @@ exports.cambioDatosReserva = (req, res) => {
             res.status(500).send(err);
         }
         if (!pac) {
-            return response.status(404).send('Error al encontrar reserva');
+            return response16.status(404).send('Error al encontrar reserva');
         } else {
             const fecha = Date.parse(req.body.fecha);
             const hora = req.body.hora;
@@ -50,7 +50,7 @@ exports.cambioDatosReserva = (req, res) => {
                 res.status(201).json(pac);
 
             } else {
-                response.status(409).send('Error al actualizar reserva');
+                response16.status(409).send('Error al actualizar reserva');
             }
         }
     })

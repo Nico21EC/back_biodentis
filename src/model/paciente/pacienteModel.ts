@@ -1,7 +1,11 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const pacienteEsquema=new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+
+const mongoose11 = require("mongoose");
+const Schema11 = mongoose11.Schema;
+
+const pacienteEsquema=new Schema11({
 nombre:{
     type:String,
     require:true,
@@ -44,11 +48,11 @@ direccion:{
 },
 
 diagnosticos: [{
-    type: Schema.Types.ObjectId,
+    type: Schema11.Types.ObjectId,
     ref: 'Diagnostico'
 }],
 historia: {
-    type: Schema.Types.ObjectId,
+    type: Schema11.Types.ObjectId,
     ref: 'HistoriasClinica'
 },
 
@@ -57,4 +61,4 @@ historia: {
     timestamps:true
 });
 
-module.exports = Mongoose.model('Paciente', pacienteEsquema);
+module.exports = mongoose11.model('Paciente', pacienteEsquema);

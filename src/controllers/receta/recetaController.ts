@@ -1,10 +1,9 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
-
-var Esquema=require('../../model/receta/recetaModel');
-var EsquemaHistoria=require('../../model/historiaClinica/historiaClinicaModel');
+var Esquema=require('../../model/receta/recetaModel.ts');
+var EsquemaHistoria=require('../../model/historiaClinica/historiaClinicaModel.ts');
 
 
  exports.createReceta =async (req, res) => {

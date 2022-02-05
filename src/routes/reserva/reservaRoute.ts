@@ -1,4 +1,4 @@
-const Reserva=require('../../controllers/reserva/reservaController');
+const Reserva=require('../../controllers/reserva/reservaController.ts');
 
 module.exports = (router) =>{
     router.post('/crearReserva', Reserva.createReserva);

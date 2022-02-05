@@ -11,7 +11,6 @@ const bodyParse=require('body-parser');
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(bodyParse.json());
 
-
   mongooseMain.connect(
       "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
   {
@@ -33,18 +32,17 @@ app.use(express.json());
 app.use('/',router);
 
 const loginRoute = require("./routes/login/loginRoute.ts");
-loginRoute(router);
-/*
-const sucuRoute=require('./routes/sucursales/sucursalesRoute');
-const citaRoute=require('./routes/cita/citaRoute');
-const pacienteRoute=require('./routes/paciente/pacienteRoute');
-const diagnosticoRoute=require('./routes/diagnostico/diagnosticoRoute');
-const historiaClinicaRoute=require('./routes/historiaClinica/historiaClinicaRoute');
-const odontogramaRoute=require('./routes/odontograma/odontogramaRouter');
-const piezaRoute=require('./routes/odontograma/piezaRoute');
-const recetaRoute=require('./routes/receta/recetaRoute');
-const tratamientoRoute=require('./routes/tratamiento/tratamientoRoute');
-const reservaRoute=require('./routes/reserva/reservaRoute');
+const sucuRoute=require('./routes/sucursales/sucursalesRoute.ts');
+
+const citaRoute=require('./routes/cita/citaRoute.ts');
+const pacienteRoute=require('./routes/paciente/pacienteRoute.ts');
+const diagnosticoRoute=require('./routes/diagnostico/diagnosticoRoute.ts');
+const historiaClinicaRoute=require('./routes/historiaClinica/historiaClinicaRoute.ts');
+const odontogramaRoute=require('./routes/odontograma/odontogramaRouter.ts');
+const piezaRoute=require('./routes/odontograma/piezaRoute.ts');
+const recetaRoute=require('./routes/receta/recetaRoute.ts');
+const tratamientoRoute=require('./routes/tratamiento/tratamientoRoute.ts');
+const reservaRoute=require('./routes/reserva/reservaRoute.ts');
 
 
 sucuRoute(router);
@@ -57,7 +55,8 @@ piezaRoute(router)
 recetaRoute(router);
 tratamientoRoute(router);
 reservaRoute(router);
-*/
+loginRoute(router);
+sucuRoute(router);
 
 app.get("/", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");

@@ -1,8 +1,8 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
 
-var Esquema=require('../../model/tratamiento/tratamientoModel');
-var EsquemaHistoria=require('../../model/historiaClinica/historiaClinicaModel');
+var Esquema=require('../../model/tratamiento/tratamientoModel.ts');
+var EsquemaHistoria=require('../../model/historiaClinica/historiaClinicaModel.ts');
 
 
  exports.createTratamiento =async (req, res) => {
@@ -30,7 +30,4 @@ var EsquemaHistoria=require('../../model/historiaClinica/historiaClinicaModel');
     }).catch((error) => {
         res.status(500).json({ error });
       });
-    
-    
-  
  };

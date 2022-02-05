@@ -1,7 +1,11 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const historiaEsquema=new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+
+const mongoose7 = require("mongoose");
+const Schema7 = mongoose7.Schema;
+
+const historiaEsquema=new Schema7({
 temperatura:{
     type:String,
     require:true,
@@ -39,15 +43,15 @@ alergia:{
     require:false
 },
 paciente: {
-    type: Schema.Types.ObjectId,
+    type: Schema7.Types.ObjectId,
     ref: 'Paciente'
 },
 recetas: [{
-    type: Schema.Types.ObjectId,
+    type: Schema7.Types.ObjectId,
     ref: 'Receta'
 }],
 tratamientos: [{
-    type: Schema.Types.ObjectId,
+    type: Schema7.Types.ObjectId,
     ref: 'Tratamiento'
 }],
 
@@ -56,4 +60,4 @@ tratamientos: [{
     timestamps:true
 });
 
-module.exports = Mongoose.model('HistoriasClinica', historiaEsquema);
+module.exports = mongoose7.model('HistoriasClinica', historiaEsquema);

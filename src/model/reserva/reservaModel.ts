@@ -1,7 +1,11 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const reservaEsquema = new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+
+const mongoose13 = require("mongoose");
+const Schema13 = mongoose13.Schema;
+
+const reservaEsquema = new Schema13({
     nombre: {
         type: String,
 
@@ -30,4 +34,4 @@ const reservaEsquema = new Schema({
         timestamps: true
     });
 
-module.exports = Mongoose.model('Reserva', reservaEsquema);
+module.exports = mongoose13.model('Reserva', reservaEsquema);

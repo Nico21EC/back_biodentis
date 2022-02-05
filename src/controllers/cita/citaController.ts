@@ -1,12 +1,16 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+
+const response15 = require("express")
+const mongoose15 = require("mongoose");
+const Schema15 = mongoose15.Schema;
+
 'üse strict'
 
 
-var Esquema=require('../../model/cita/citaModel');
-var EsquemaSucu=require('../../model/sucursales/sucursalesModel');
-var EsquemaOdo=require('../../model/login/Odontologo');
-var EsquemaPaciente=require('../../model/paciente/pacienteModel');
+var Esquema=require('../../model/cita/citaModel.ts');
+var EsquemaSucu=require('../../model/sucursales/sucursalesModel.ts');
+var EsquemaOdo=require('../../model/login/Odontologo.ts');
+var EsquemaPaciente=require('../../model/paciente/pacienteModel.ts');
 
  exports.createCita =(req, res) => {
      
@@ -65,7 +69,7 @@ var EsquemaPaciente=require('../../model/paciente/pacienteModel');
             res.status(500).send(err);
         }
         if(!pac) {
-            return response.status(404).send('Error al encontrar cita');
+            return response15.status(404).send('Error al encontrar cita');
         }else{
             const fecha = Date.parse(req.body.fecha);
             const hora=req.body.hora;
@@ -76,7 +80,7 @@ var EsquemaPaciente=require('../../model/paciente/pacienteModel');
                 res.status(201).json(pac);
                 
             }else{
-                response.status(409).send('Error al actualizar cita');
+                response15.status(409).send('Error al actualizar cita');
             }
     }})
   

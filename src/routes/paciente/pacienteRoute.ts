@@ -1,4 +1,4 @@
-const Paciente = require('../../controllers/paciente/pacienteController');
+const Paciente = require('../../controllers/paciente/pacienteController.ts');
 
 module.exports = (router) => {
     router.post('/crearPaciente', Paciente.createPaciente);

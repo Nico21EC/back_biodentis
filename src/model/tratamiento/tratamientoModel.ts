@@ -1,7 +1,11 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const tratamientoEsquema=new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+
+const mongoose14 = require("mongoose");
+const Schema14 = mongoose14.Schema;
+
+const tratamientoEsquema=new Schema14({
 fecha:{
     type:Date,
     require:true,
@@ -41,4 +45,4 @@ estado:{
     timestamps:true
 });
 
-module.exports = Mongoose.model('Tratamiento', tratamientoEsquema);
+module.exports = mongoose14.model('Tratamiento', tratamientoEsquema);

@@ -1,7 +1,11 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const diagnosticoEsquema=new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+
+const mongoose6 = require("mongoose");
+const Schema6 = mongoose6.Schema;
+
+const diagnosticoEsquema=new Schema6({
 
 diagnostico:[{
     cor:String,
@@ -11,7 +15,7 @@ diagnostico:[{
     nome: String,
     numeroDente: Number,
 }],odontograma: {
-    type: Schema.Types.ObjectId,
+    type: Schema6.Types.ObjectId,
     ref: 'Odontograma'
 }
 },
@@ -19,4 +23,4 @@ diagnostico:[{
     timestamps:true
 });
 
-module.exports = Mongoose.model('Diagnostico', diagnosticoEsquema);
+module.exports = mongoose6.model('Diagnostico', diagnosticoEsquema);

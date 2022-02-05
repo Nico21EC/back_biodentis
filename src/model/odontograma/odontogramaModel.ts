@@ -1,14 +1,16 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const odontogramaEsquema = new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
 
+const mongoose8 = require("mongoose");
+const Schema8 = mongoose8.Schema;
 
+const odontogramaEsquema = new Schema8({
     fechaOdonto: {
         type: Date,
         require:false,
     },diagnostico: {
-        type: Schema.Types.ObjectId,
+        type: Schema8.Types.ObjectId,
         ref: 'Diagnostico'
     }
 },
@@ -16,4 +18,4 @@ const odontogramaEsquema = new Schema({
         timestamps: true
     });
 
-module.exports = Mongoose.model('Odontograma', odontogramaEsquema);
+module.exports = mongoose8.model('Odontograma', odontogramaEsquema);

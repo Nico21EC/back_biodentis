@@ -1,4 +1,4 @@
-const Cita=require('../../controllers/cita/citaController');
+const Cita=require('../../controllers/cita/citaController.ts');
 
 module.exports = (router) =>{
     router.post('/crearCita', Cita.createCita);

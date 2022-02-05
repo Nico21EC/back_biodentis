@@ -1,4 +1,4 @@
-const HistoriasClinica=require('../../controllers/historiaClinica/historiaClinicaController');
+const HistoriasClinica=require('../../controllers/historiaClinica/historiaClinicaController.ts');
 
 module.exports = (router) =>{
     router.post('/crearHistoria', HistoriasClinica.createHistoria);

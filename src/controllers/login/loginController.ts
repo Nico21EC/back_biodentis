@@ -2,9 +2,8 @@
 const request = require("express");
 const response = require("express");
 //import { request, response } from "express";
-
 const mongoose2 = require("mongoose");
-const Schema = require("mongoose");
+const Schema = mongoose2.Schema;
 //import mongoose, { Schema } from 'mongoose';
 'üse strict'
 

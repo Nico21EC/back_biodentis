@@ -1,10 +1,11 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
+
 'üse strict'
 
-var Esquema = require('../../model/diagnostico/diagnosticoModel');
-var EsquemaPaciente = require('../../model/paciente/pacienteModel');
-var EsquemaOdontograma = require('../../model/diagnostico/diagnosticoModel');
+var Esquema = require('../../model/diagnostico/diagnosticoModel.ts');
+var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
+var EsquemaOdontograma = require('../../model/diagnostico/diagnosticoModel.ts');
 
 exports.creatediagnostico = async (req, res) => {
     console.log(req);

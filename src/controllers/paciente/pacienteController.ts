@@ -1,11 +1,10 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
-
-var Esquema = require('../../model/paciente/pacienteModel');
-var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel');
-var EsquemaDiagnostico = require('../../model/diagnostico/diagnosticoModel');
+var Esquema = require('../../model/paciente/pacienteModel.ts');
+var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel.ts');
+var EsquemaDiagnostico = require('../../model/diagnostico/diagnosticoModel.ts');
 
 exports.createPaciente = async (req, res) => {
 

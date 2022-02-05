@@ -1,7 +1,7 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
 'üse strict'
-var Esquema=require('../../model/odontograma/odontogramaModel');
+var Esquema=require('../../model/odontograma/odontogramaModel.ts');
 
 
  exports.createOdontograma = (req, res) => {

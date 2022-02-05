@@ -1,10 +1,10 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
 
-var Esquema = require('../../model/historiaClinica/historiaClinicaModel');
-var EsquemaPaciente = require('../../model/paciente/pacienteModel');
+var Esquema = require('../../model/historiaClinica/historiaClinicaModel.ts');
+var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
 var paciente_id;
 
 exports.createHistoria = (req, res) => {
@@ -66,5 +66,3 @@ exports.numHistorias=(req, res)=>{
       res.status(200).send(String(numDocs+1));})
   .catch(err => console.error("Failed to count documents: ", err))
 }
-
-

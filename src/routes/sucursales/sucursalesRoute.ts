@@ -1,4 +1,4 @@
-const Sucursales=require('../../controllers/sucursales/sucursalesController');
+const Sucursales=require('../../controllers/sucursales/sucursalesController.ts');
 
 module.exports = (router) =>{
     router.post('/crearSucu', Sucursales.createSucursal);

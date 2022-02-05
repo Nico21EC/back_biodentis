@@ -1,7 +1,11 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const recetaEsquema=new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+
+const mongoose12 = require("mongoose");
+const Schema12 = mongoose12.Schema;
+
+const recetaEsquema=new Schema12({
 fecha:{
     type:Date,
     require:true,
@@ -24,4 +28,4 @@ dosis:{
     timestamps:true
 });
 
-module.exports = Mongoose.model('Receta', recetaEsquema);
+module.exports = mongoose12.model('Receta', recetaEsquema);

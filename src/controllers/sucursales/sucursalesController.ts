@@ -1,11 +1,10 @@
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+//import { request, response } from "express";
+//import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
-
-var Esquema=require('../../model/sucursales/sucursalesModel');
-var EsquemaCita=require('../../model/cita/citaModel');
-var EsquemaOdo=require('../../model/login/Odontologo');
+var Esquema=require('../../model/sucursales/sucursalesModel.ts');
+var EsquemaCita=require('../../model/cita/citaModel.ts');
+var EsquemaOdo=require('../../model/login/Odontologo.ts');
 
 
  exports.createSucursal = (req, res) => {
