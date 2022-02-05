@@ -1,7 +1,10 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const citaEsquema = new Schema({
+const mongoose5 = require("mongoose");
+const Schema5 = mongoose5.Schema;
+
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+const citaEsquema = new Schema5({
     nombre: {
         type: String,
 
@@ -29,4 +32,4 @@ const citaEsquema = new Schema({
         timestamps: true
     });
 
-module.exports = Mongoose.model('Cita', citaEsquema);
+module.exports = mongoose5.model('Cita', citaEsquema);

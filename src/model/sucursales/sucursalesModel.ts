@@ -1,7 +1,10 @@
 
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const sucuEsquema=new Schema({
+const mongoose4 = require("mongoose");
+const Schema4 = mongoose4.Schema;
+
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+const sucuEsquema=new Schema4({
 nombre:{
     type:String,
     require:true,
@@ -19,11 +22,11 @@ contacto:{
 },
 
 odontologos: [{
-    type: Schema.Types.ObjectId,
+    type: Schema4.Types.ObjectId,
     ref: 'Odontologo'
 }],
 citas: [{
-    type: Schema.Types.ObjectId,
+    type: Schema4.Types.ObjectId,
     ref: 'Cita'
 }],
 
@@ -33,4 +36,4 @@ citas: [{
     timestamps:true
 });
 
-module.exports = Mongoose.model("Sucursales", sucuEsquema);
+module.exports = mongoose4.model("Sucursales", sucuEsquema);

@@ -3,7 +3,7 @@ const port = process.env.PORT || 3001;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const mongoose = require('mongoose');
+const mongooseMain = require('mongoose');
 
 const cors= require('cors');
 const bodyParse=require('body-parser');
@@ -12,7 +12,7 @@ app.use(bodyParse.urlencoded({extended:false}));
 app.use(bodyParse.json());
 
 
-  mongoose.connect(
+  mongooseMain.connect(
       "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
@@ -25,15 +25,16 @@ app.use(bodyParse.json());
 }
 );
 
-
-//const router = express.Router();
+const router = express.Router();
 
 app.use(cors());
 app.use(express.json());
 
-//app.use('/api',router);
+app.use('/',router);
+
+const loginRoute = require("./routes/login/loginRoute.ts");
+loginRoute(router);
 /*
-const loginRoute = require("./routes/login/loginRoute");
 const sucuRoute=require('./routes/sucursales/sucursalesRoute');
 const citaRoute=require('./routes/cita/citaRoute');
 const pacienteRoute=require('./routes/paciente/pacienteRoute');
@@ -45,7 +46,7 @@ const recetaRoute=require('./routes/receta/recetaRoute');
 const tratamientoRoute=require('./routes/tratamiento/tratamientoRoute');
 const reservaRoute=require('./routes/reserva/reservaRoute');
 
-loginRoute(router);
+
 sucuRoute(router);
 citaRoute(router);
 pacienteRoute(router);

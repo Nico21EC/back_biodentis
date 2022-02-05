@@ -1,7 +1,9 @@
 'use strict'
-import mongoose, { Schema } from 'mongoose';
-import * as Mongoose from "mongoose";
-const odoEsquema=new Schema({
+//import mongoose, { Schema } from 'mongoose';
+//import * as Mongoose from "mongoose";
+const mongoose3 = require("mongoose");
+const Schema2 = mongoose3.Schema;
+const odoEsquema=new Schema2({
 nombre:{
     type:String,
     require:true,
@@ -30,7 +32,7 @@ contrasenia:{
     type:String,
     default: 'activo'
 },citas: [{
-    type: Schema.Types.ObjectId,
+    type: Schema2.Types.ObjectId,
     ref: 'Cita'
 }],
 
@@ -39,4 +41,4 @@ contrasenia:{
     timestamps:true
 });
 
-module.exports = Mongoose.model('Odontologo', odoEsquema);
+module.exports = mongoose3.model('Odontologo', odoEsquema);

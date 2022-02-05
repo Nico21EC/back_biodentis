@@ -1,4 +1,4 @@
-const Odontologo=require('../../controllers/login/loginController');
+const Odontologo=require('../../controllers/login/loginController.ts');
 
 module.exports = (router) =>{
     router.post('/registro', Odontologo.createOdontolo);

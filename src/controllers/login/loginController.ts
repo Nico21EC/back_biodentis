@@ -1,12 +1,17 @@
 
-import { request, response } from "express";
-import mongoose, { Schema } from 'mongoose';
+const request = require("express");
+const response = require("express");
+//import { request, response } from "express";
+
+const mongoose2 = require("mongoose");
+const Schema = require("mongoose");
+//import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
 
-var Esquema=require('../../model/login/Odontologo');
-var EsquemaSucu=require('../../model/sucursales/sucursalesModel');
-var EsquemaCita=require('../../model/cita/citaModel');
+var Esquema=require('../../model/login/Odontologo.ts');
+var EsquemaSucu=require('../../model/sucursales/sucursalesModel.ts');
+var EsquemaCita=require('../../model/cita/citaModel.ts');
 var jwt=require("jsonwebtoken");
  exports.createOdontolo = async(req, res) => {
      
