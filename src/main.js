@@ -3,7 +3,7 @@ const port = process.env.PORT || 3001;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-//const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const cors= require('cors');
 const bodyParse=require('body-parser');
@@ -11,7 +11,7 @@ const bodyParse=require('body-parser');
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(bodyParse.json());
 
-/*
+
   mongoose.connect(
       "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
   {
@@ -25,7 +25,7 @@ app.use(bodyParse.json());
 }
 );
 
-*/
+
 //const router = express.Router();
 
 app.use(cors());
