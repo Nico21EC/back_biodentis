@@ -1,5 +1,5 @@
 'use strict'
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -29,7 +29,7 @@ const router = express.Router();
 app.use(cors());
 app.use(express.json());
 
-app.use('/',router);
+app.use('/messenger',router);
 
 const loginRoute = require("./routes/login/loginRoute.ts");
 const sucuRoute=require('./routes/sucursales/sucursalesRoute.ts');
@@ -65,15 +65,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Escuchando peticiones en el puerto ${port}`);
 });
-
-
-/*
-router.get('/', (request, response) => {
-  response.send('Hello from home');
-});
-
-app.use(router);
-
-app.listen(3000,()=>{
-  console.log(`server corriendo`);
-});*/
