@@ -499,7 +499,7 @@ function callSendAPI(messageData) {
               recipientId
             );
           }
-          resolve(response);
+          resolve();
         } else {
           reject();
           console.error(
