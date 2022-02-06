@@ -1,14 +1,55 @@
-//libraries
-const express = require("express");
-const router = express.Router();
-//const request = require("express");
+const response20 = require("express")
+
+'üse strict'
+
+const config = require("../config/config");
+var Esquema=require('./citaFacebookModel.ts');
+const dialogflow = require("./dialogflow");
 const uuid = require("uuid");
 const axios = require("axios");
-
-//files
-const config = require("../config/config");
-const dialogflow = require("./dialogflow");
 const { structProtoToJson } = require("./structFunctions");
+
+
+exports.facebookCitas =(req, res) => {
+        if (
+          req.query["hub.mode"] === "subscribe" &&
+          req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
+        ) {
+          res.status(200).send(req.query["hub.challenge"]);
+        } else {
+          console.error("Failed validation. Make sure the validation tokens match.");
+          res.sendStatus(403);
+        }
+ };
+
+ exports.facebookwebhook= (req, res) => {
+   
+        var data = req.body;
+        // Make sure this is a page subscription
+        if (data.object == "page") {
+          // Iterate over each entry
+          // There may be multiple if batched
+          data.entry.forEach(function (pageEntry) {
+            var pageID = pageEntry.id;
+            var timeOfEvent = pageEntry.time;
+      
+            // Iterate over each messaging event
+            pageEntry.messaging.forEach(function (messagingEvent) {
+              if (messagingEvent.message) {
+                receivedMessage(messagingEvent);
+              } else if (messagingEvent.postback) {
+                receivedPostback(messagingEvent);
+              } else {
+                console.log(
+                  "Webhook received unknown messagingEvent: ",
+                  messagingEvent
+                );
+              }
+            });
+          });
+        }
+    };
+
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -63,7 +104,7 @@ async function receivedMessage(event) {
   var quickReply = message.quick_reply;
 
   if (isEcho) {
-    handleEcho(messageId, appId, metadata);
+    //handleEcho(messageId, appId, metadata);
     return;
   } else if (quickReply) {
     handleQuickReply(senderId, quickReply, messageId);
@@ -95,6 +136,7 @@ async function setSessionAndUser(senderId) {
 
 async function handleQuickReply(senderId, quickReply, messageId) {
   let quickReplyPayload = quickReply.payload;
+  let a;
   console.log(
     "Quick reply for message %s with payload %s",
     messageId,
@@ -138,7 +180,7 @@ async function handleMessage(message, sender) {
         };
         replies.push(reply);
       });
-      await sendQuickReply(sender, message.quickReplies.title, replies);
+      await sendQuickReply(sender, message.quickReplies.title, replies,"");
       break;
     case "image": // image
       await sendImageMessage(sender, message.image.imageUri);
@@ -457,7 +499,7 @@ function callSendAPI(messageData) {
               recipientId
             );
           }
-          resolve();
+          resolve(response);
         } else {
           reject();
           console.error(
@@ -506,4 +548,5 @@ function isDefined(obj) {
   return obj != null;
 }
 
-module.exports = router;
+      
+    

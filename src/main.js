@@ -33,7 +33,6 @@ app.use('/messenger',router);
 
 const loginRoute = require("./routes/login/loginRoute.ts");
 const sucuRoute=require('./routes/sucursales/sucursalesRoute.ts');
-
 const citaRoute=require('./routes/cita/citaRoute.ts');
 const pacienteRoute=require('./routes/paciente/pacienteRoute.ts');
 const diagnosticoRoute=require('./routes/diagnostico/diagnosticoRoute.ts');
@@ -43,7 +42,7 @@ const piezaRoute=require('./routes/odontograma/piezaRoute.ts');
 const recetaRoute=require('./routes/receta/recetaRoute.ts');
 const tratamientoRoute=require('./routes/tratamiento/tratamientoRoute.ts');
 const reservaRoute=require('./routes/reserva/reservaRoute.ts');
-
+const facebookRoute=require('./dialogflow/citaFacebookRouter.ts');
 
 sucuRoute(router);
 citaRoute(router);
@@ -57,6 +56,7 @@ tratamientoRoute(router);
 reservaRoute(router);
 loginRoute(router);
 sucuRoute(router);
+facebookRoute(router);
 
 app.get("/", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
