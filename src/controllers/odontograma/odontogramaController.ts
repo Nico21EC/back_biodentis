@@ -15,7 +15,8 @@ exports.createOdontograma = (req, res) => {
       if (pac) {
         pac.odontogramas.push(odontogramanew);
         pac.save();
-        res.json({ message: 'Odontograma  en paciente creado con exito' });
+        //res.json({ message: 'Odontograma  en paciente creado con exito' });
+        res.send(result);
       } else if (err) {
         res.status(400).json({ message: 'Error al crear Odontograma' })
       }
