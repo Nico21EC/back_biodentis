@@ -1,12 +1,12 @@
 'üse strict'
 
 
-var EsquemaOdontograma = require('../../model/historiaClinica/historiaClinicaModel.ts');
+var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel.ts');
 var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
 var paciente_id;
 
 exports.createHistoria = (req, res) => {
-  const historianew = new EsquemaOdontograma();
+  const historianew = new EsquemaHistoria();
   historianew.temperatura = req.body.temperatura;
   historianew.peso = req.body.peso;
   historianew.presion = req.body.presion;
@@ -43,7 +43,7 @@ exports.createHistoria = (req, res) => {
 
 };
 exports.historias = (req, res) => {
-  EsquemaOdontograma.find({}).populate('recetas').populate('tratamientos').populate('paciente').exec(function (err, historia) {
+  EsquemaHistoria.find({}).populate('recetas').populate('tratamientos').populate('paciente').exec(function (err, historia) {
     res.status(200).send(historia);
   });
 
@@ -51,7 +51,7 @@ exports.historias = (req, res) => {
 
 exports.numHistorias=(req, res)=>{
  
-  EsquemaOdontograma.countDocuments({ })
+  EsquemaHistoria.countDocuments({ })
   .then((numDocs) =>{console.log(`${numDocs} documents match the specified query.`)
       res.status(200).send(String(numDocs+1));})
   .catch(err => console.error("Failed to count documents: ", err))
