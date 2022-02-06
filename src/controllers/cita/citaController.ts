@@ -7,14 +7,14 @@ const Schema15 = mongoose15.Schema;
 'üse strict'
 
 
-var Esquema=require('../../model/cita/citaModel.ts');
+var EsquemaOdontograma=require('../../model/cita/citaModel.ts');
 var EsquemaSucu=require('../../model/sucursales/sucursalesModel.ts');
 var EsquemaOdo=require('../../model/login/Odontologo.ts');
 var EsquemaPaciente=require('../../model/paciente/pacienteModel.ts');
 
  exports.createCita =(req, res) => {
      
-    const citanew= new Esquema();
+    const citanew= new EsquemaOdontograma();
     citanew.fecha=Date.parse(req.body.fecha);
     citanew.hora=req.body.hora;
     citanew.motivo=req.body.motivo;
@@ -64,7 +64,7 @@ var EsquemaPaciente=require('../../model/paciente/pacienteModel.ts');
 
  exports.cambioDatosCita= (req, res) => {
     console.log(req.params.id);
-    Esquema.findOneAndUpdate({_id:req.params.id}, req.body, {new:true}, (err,pac)=>{
+    EsquemaOdontograma.findOneAndUpdate({_id:req.params.id}, req.body, {new:true}, (err,pac)=>{
         if (err){
             res.status(500).send(err);
         }
@@ -87,7 +87,7 @@ var EsquemaPaciente=require('../../model/paciente/pacienteModel.ts');
     };
 
 exports.listaCitas= (req, res) => {
-    Esquema.find({}).exec(function (err, citas) {
+    EsquemaOdontograma.find({}).exec(function (err, citas) {
         res.status(200).json(citas);
       });
     }

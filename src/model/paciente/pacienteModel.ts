@@ -1,7 +1,4 @@
 'use strict'
-//import mongoose, { Schema } from 'mongoose';
-//import * as Mongoose from "mongoose";
-
 const mongoose11 = require("mongoose");
 const Schema11 = mongoose11.Schema;
 
@@ -46,16 +43,18 @@ direccion:{
     require:false,
     min:8
 },
-
-diagnosticos: [{
+odontogramas: [{
     type: Schema11.Types.ObjectId,
-    ref: 'Diagnostico'
+    ref: 'Odontograma'
 }],
 historia: {
     type: Schema11.Types.ObjectId,
     ref: 'HistoriasClinica'
 },
-
+seguimiento: {
+    type: Schema11.Types.ObjectId,
+    ref: 'Seguimiento'
+}
 },
 {
     timestamps:true

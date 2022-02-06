@@ -1,14 +1,14 @@
 //import { request, response } from "express";
 //import mongoose, { Schema } from 'mongoose';
 'üse strict'
-var Esquema=require('../../model/odontograma/piezasModel.ts');
+var EsquemaOdontograma=require('../../model/odontograma/piezasModel.ts');
 var EsquemaOdontograma=require('../../model/odontograma/odontogramaModel.ts');
 var EsquemaPieza=require('../../model/odontograma/piezasModel.ts');
 
 
  exports.createPieza = async (req, res) => {
     
-    const piezanew= new Esquema();
+    const piezanew= new EsquemaOdontograma();
     piezanew.num=req.body.num;
     piezanew.diagPieza=req.body.diagPieza;
     piezanew.zonasBucales=req.body.zonasBucales;

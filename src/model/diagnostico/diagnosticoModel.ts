@@ -1,10 +1,7 @@
 'use strict'
-//import mongoose, { Schema } from 'mongoose';
-//import * as Mongoose from "mongoose";
 
 const mongoose6 = require("mongoose");
 const Schema6 = mongoose6.Schema;
-
 const diagnosticoEsquema=new Schema6({
 
 diagnostico:[{
@@ -14,9 +11,10 @@ diagnostico:[{
     letra: String,
     nome: String,
     numeroDente: Number,
-}],odontograma: {
+}],
+tratamiento: {
     type: Schema6.Types.ObjectId,
-    ref: 'Odontograma'
+    ref: 'Tratamiento'
 }
 },
 {

@@ -2,13 +2,13 @@
 //import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
-var Esquema=require('../../model/sucursales/sucursalesModel.ts');
+var EsquemaOdontograma=require('../../model/sucursales/sucursalesModel.ts');
 var EsquemaCita=require('../../model/cita/citaModel.ts');
 var EsquemaOdo=require('../../model/login/Odontologo.ts');
 
 
  exports.createSucursal = (req, res) => {
-     const sucunew= new Esquema();
+     const sucunew= new EsquemaOdontograma();
      sucunew.nombre=req.body.nombre;
      sucunew.direccion=req.body.direccion;
      sucunew.contacto=req.body.contacto;
@@ -32,7 +32,7 @@ var EsquemaOdo=require('../../model/login/Odontologo.ts');
 
  
 exports.sucursales = (req, res) => {
-    Esquema.find({}).populate('citas').populate('odontologos').exec(function(err,sucu){
+    EsquemaOdontograma.find({}).populate('citas').populate('odontologos').exec(function(err,sucu){
       res.status(200).send(sucu);
     });
 

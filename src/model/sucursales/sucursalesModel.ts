@@ -29,9 +29,7 @@ citas: [{
     type: Schema4.Types.ObjectId,
     ref: 'Cita'
 }],
-
 },
-
 {
     timestamps:true
 });

@@ -1,28 +1,26 @@
-//import { request, response } from "express";
-//import mongoose, { Schema } from 'mongoose';
 'üse strict'
-var Esquema=require('../../model/odontograma/odontogramaModel.ts');
+var Esquema = require('../../model/odontograma/odontogramaModel.ts');
+var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
 
-
- exports.createOdontograma = (req, res) => {
-    console.log(req.body);
-    const odontogramanew= new Esquema();
-    
-    odontogramanew.fechaOdonto=req.body.fechaOdonto;
- 
+exports.createOdontograma = (req, res) => {
   
-    console.log(req.body);
-     
-   odontogramanew.save().then((result)=>{
-      if(result){
-        
+  const odontogramanew = new Esquema();
+  odontogramanew.fechaOdonto = req.body.fechaOdonto;
+  odontogramanew.paciente = req.body.paciente;
+  console.log(req.body);
 
-        res.json(result) 
-      }  
-        })
-    .catch((error) => {
-        res.status(500).json({ error });
-      });
- };
-
-
+  odontogramanew.save().then((result) => {
+    EsquemaPaciente.findOne({ _id: odontogramanew.paciente }, (err, pac) => {
+      console.log(odontogramanew.paciente)
+      if (pac) {
+        pac.odontogramas.push(odontogramanew);
+        pac.save();
+        res.json({ message: 'Odontograma  en paciente creado con exito' });
+      } else if (err) {
+        res.status(400).json({ message: 'Error al crear Odontograma' })
+      }
+    });
+  }).catch((error) => {
+    res.status(500).json({ error });
+  });
+};

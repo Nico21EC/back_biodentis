@@ -6,12 +6,12 @@ const moment = require("moment");
 'üse strict'
 
 
-var Esquema = require('../../model/reserva/reservaModel.ts');
+var EsquemaOdontograma = require('../../model/reserva/reservaModel.ts');
 
 exports.createReserva = (req, res) => {
     console.log(req.body)
  console.log(moment(req.body.fecha).format('LLL'))
-    const reservanew = new Esquema();
+    const reservanew = new EsquemaOdontograma();
     console.log(req.body)
     reservanew.fecha =  moment(req.body.fecha).format('LLL');
 
@@ -34,7 +34,7 @@ exports.createReserva = (req, res) => {
 
 exports.cambioDatosReserva = (req, res) => {
     console.log(req.params.id);
-    Esquema.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, pac) => {
+    EsquemaOdontograma.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, pac) => {
         if (err) {
             res.status(500).send(err);
         }
@@ -58,13 +58,13 @@ exports.cambioDatosReserva = (req, res) => {
 };
 
 exports.listaReservas = (req, res) => {
-    Esquema.find({}).exec(function (err, reservas) {
+    EsquemaOdontograma.find({}).exec(function (err, reservas) {
         res.status(200).json(reservas);
     });
 }
 
 exports.reservaEdit = (req, res) => {
-    Esquema.findOne({})
+    EsquemaOdontograma.findOne({})
     .where({fecha: req.params.fecha})
     .exec((err, act) => {
         if(err) {

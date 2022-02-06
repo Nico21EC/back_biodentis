@@ -2,13 +2,13 @@
 //import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
-var Esquema=require('../../model/receta/recetaModel.ts');
+var EsquemaOdontograma=require('../../model/receta/recetaModel.ts');
 var EsquemaHistoria=require('../../model/historiaClinica/historiaClinicaModel.ts');
 
 
  exports.createReceta =async (req, res) => {
      
-    const recetanew= new Esquema();
+    const recetanew= new EsquemaOdontograma();
     recetanew.fecha=Date.parse(req.body.fecha);
     recetanew.medicamento=req.body.medicamento;
     recetanew.dosis=req.body.dosis;

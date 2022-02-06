@@ -1,44 +1,26 @@
 'use strict'
-//import mongoose, { Schema } from 'mongoose';
-//import * as Mongoose from "mongoose";
 
 const mongoose14 = require("mongoose");
 const Schema14 = mongoose14.Schema;
 
 const tratamientoEsquema=new Schema14({
-fecha:{
-    type:Date,
-    require:true,
-    
-},
-planTratamiento:{
+descripcion:{
     type:String,
-    require:true,
-    max:80
+    require: true,
+    max:100
 },
-total:{
-    type:Number,
-    require:false,
-    
+costo:{
+    type: String,
+    require: true,
 },
-abono:{
-    type:Number,
-  
-    require:false,
-    
+sesiones:{
+    type: String,
+    require: true
+}, 
+diagnostico:{
+    type: Schema14.Types.ObjectId,
+    ref: 'Diagnostico'
 },
-saldo:{
-    type:Number,
-
-    require:false,
-    
-},
-estado:{
-    type:String,
-    max:20,
-    require:false,
-    
-}
 
 },
 {

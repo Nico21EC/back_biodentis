@@ -1,14 +1,12 @@
-//import { request, response } from "express";
-//import mongoose, { Schema } from 'mongoose';
 'üse strict'
 
-var Esquema = require('../../model/paciente/pacienteModel.ts');
+var EsquemaOdontograma = require('../../model/paciente/pacienteModel.ts');
 var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel.ts');
-var EsquemaDiagnostico = require('../../model/diagnostico/diagnosticoModel.ts');
+var EsquemaOdontograma = require('../../model/odontograma/odontogramaModel.ts');
 
 exports.createPaciente = async (req, res) => {
 
-  const pacientenew = new Esquema();
+  const pacientenew = new EsquemaOdontograma();
   pacientenew.nombre = req.body.nombre;
   pacientenew.apellido = req.body.apellido;
   pacientenew.numCedula = req.body.numCedula;
@@ -19,49 +17,34 @@ exports.createPaciente = async (req, res) => {
   pacientenew.fechaNacimiento = req.body.fechaNacimiento;
   pacientenew.correo = req.body.correo;
 
-
   pacientenew.save().then((result) => {
     if (result) {
-
       res.json({ message: 'Paciente creado con exito' });
-
-
     } else {
       res.status(400).json({ message: 'Error al crear Paciente' });
     }
-
-
   })
     .catch((error) => {
       res.status(500).json({ error });
     });
-
-
 };
-
-
-
 
 exports.paciente = (req, res) => {
-  Esquema.findOne({ _id: req.params.id }).exec(function (err, pac) {
+  EsquemaOdontograma.findOne({ _id: req.params.id }).exec(function (err, pac) {
     res.status(200).send(pac);
   });
-
 };
-
 
 exports.pacientes = (req, res) => {
-  Esquema.find({}).populate('citas').populate('diagnosticos').exec(function (err, pac) {
+  EsquemaOdontograma.find({}).populate('citas').populate('odontogramas').exec(function (err, pac) {
     res.status(200).send(pac);
   });
 
 };
-
-
 
 exports.cambioDatos = (req, res) => {
   console.log(req.params.id);
-  Esquema.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, pac) => {
+  EsquemaOdontograma.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, pac) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -76,29 +59,25 @@ exports.cambioDatos = (req, res) => {
       console.log(direccion);
 
       if (direccion || celular || correo) {
-
         res.status(201).json(pac);
-
       } else {
         res.status(409).send('Error al actualizar datos');
       }
     }
   })
-
 };
-
 
 exports.PaginacionPaciente = (req, res, next) => {
   let perPage =Number( req.params.num) ;
   console.log(req.params.num);
   let page = Number(req.params.page) || 1;
 
-  Esquema
+  EsquemaOdontograma
     .find({}) // finding all documents
     .skip((perPage * page) - perPage) // in the first page the value of the skip is 0
     .limit(perPage) // output just 9 items
     .exec((err, pac) => {
-      Esquema.countDocuments((err, count) => { // count to calculate the number of pages
+      EsquemaOdontograma.countDocuments((err, count) => { // count to calculate the number of pages
         if (err){ return next(err);
         }else{
           res.json( {
@@ -123,10 +102,10 @@ exports.buscarPaciente= (req, res, next) => {
   console.log(req.params.num);
   let page = Number(req.params.page) || 1;
 
-Esquema.find({$or: [{nombre:{ $regex: '.*' + name + '.*' }}, {numCedula:{ $regex: '.*' + cedu + '.*' }} ]}).skip((perPage * page) - perPage) // in the first page the value of the skip is 0
+EsquemaOdontograma.find({$or: [{nombre:{ $regex: '.*' + name + '.*' }}, {numCedula:{ $regex: '.*' + cedu + '.*' }} ]}).skip((perPage * page) - perPage) // in the first page the value of the skip is 0
     .limit(perPage) // output just 9 items
     .exec((err, pac) => {
-      Esquema.countDocuments((err, count) => { // count to calculate the number of pages
+      EsquemaOdontograma.countDocuments((err, count) => { // count to calculate the number of pages
         if (err){ return next(err);
         }else{
           res.json( {

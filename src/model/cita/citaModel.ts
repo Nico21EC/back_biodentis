@@ -2,12 +2,9 @@
 const mongoose5 = require("mongoose");
 const Schema5 = mongoose5.Schema;
 
-//import mongoose, { Schema } from 'mongoose';
-//import * as Mongoose from "mongoose";
 const citaEsquema = new Schema5({
     nombre: {
         type: String,
-
         require: false,
     },
     apellido: {
@@ -20,7 +17,6 @@ const citaEsquema = new Schema5({
         require: true,
 
     },
-  
     motivo: {
         type: String,
         max: 80,

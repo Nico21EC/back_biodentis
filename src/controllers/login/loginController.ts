@@ -8,13 +8,13 @@ const Schema = mongoose2.Schema;
 'üse strict'
 
 
-var Esquema=require('../../model/login/Odontologo.ts');
+var EsquemaOdontograma=require('../../model/login/Odontologo.ts');
 var EsquemaSucu=require('../../model/sucursales/sucursalesModel.ts');
 var EsquemaCita=require('../../model/cita/citaModel.ts');
 var jwt=require("jsonwebtoken");
  exports.createOdontolo = async(req, res) => {
      
-    const odonew= new Esquema();
+    const odonew= new EsquemaOdontograma();
     odonew.nombre=req.body.nombre;
     odonew.apellido=req.body.apellido;
     odonew.fechaNacimiento=Date.parse(req.body.fechaNacimiento);
@@ -41,7 +41,7 @@ var jwt=require("jsonwebtoken");
 
 
 exports.loginOdontolo = async(req, res) => {
-    await Esquema.findOne({correo:req.body.correo,contrasenia:req.body.contrasenia}, req.body, {new:false}, (err,odon)=>{
+    await EsquemaOdontograma.findOne({correo:req.body.correo,contrasenia:req.body.contrasenia}, req.body, {new:false}, (err,odon)=>{
        console.log(req.body);
         if (err){
             res.status(500).send(err);
@@ -66,7 +66,7 @@ exports.loginOdontolo = async(req, res) => {
 
 
     exports.allodontologos=async(req,res)=>{
-        await   Esquema.find({},function (err, odo){
+        await   EsquemaOdontograma.find({},function (err, odo){
             EsquemaCita.populate(odo,{path:"citas"},function(err,odo){
                 res.status(200).send(odo);
             })
@@ -76,10 +76,10 @@ exports.loginOdontolo = async(req, res) => {
 
     exports.cambioEstado=async(req,res)=>{
         console.log(req.body)
-        const odonew= new Esquema();
+        const odonew= new EsquemaOdontograma();
         odonew.correo=req.body.correo;
         console.log(odonew.correo);
-        await Esquema.findOneAndUpdate({correo:odonew.correo}, {estado:'bloqueado'},(err,odon)=>{
+        await EsquemaOdontograma.findOneAndUpdate({correo:odonew.correo}, {estado:'bloqueado'},(err,odon)=>{
             if (err){
                 res.status(500).send(err);
             }
@@ -97,7 +97,7 @@ exports.loginOdontolo = async(req, res) => {
 
 
     exports.cambioContraseñaOdontolo = async (req, res) => {
-        await   Esquema.findOneAndUpdate({_id:req.params.id}, req.body, {new:true}, (err,odon)=>{
+        await   EsquemaOdontograma.findOneAndUpdate({_id:req.params.id}, req.body, {new:true}, (err,odon)=>{
             if (err){
                 res.status(500).send(err);
             }

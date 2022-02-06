@@ -49,11 +49,7 @@ paciente: {
 recetas: [{
     type: Schema7.Types.ObjectId,
     ref: 'Receta'
-}],
-tratamientos: [{
-    type: Schema7.Types.ObjectId,
-    ref: 'Tratamiento'
-}],
+}]
 
 },
 {
