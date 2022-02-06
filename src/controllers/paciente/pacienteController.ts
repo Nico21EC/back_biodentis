@@ -1,12 +1,12 @@
 'üse strict'
 
-var EsquemaOdontograma = require('../../model/paciente/pacienteModel.ts');
+var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
 var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel.ts');
 var EsquemaOdontograma = require('../../model/odontograma/odontogramaModel.ts');
 
 exports.createPaciente = async (req, res) => {
 
-  const pacientenew = new EsquemaOdontograma();
+  const pacientenew = new EsquemaPaciente();
   pacientenew.nombre = req.body.nombre;
   pacientenew.apellido = req.body.apellido;
   pacientenew.numCedula = req.body.numCedula;
@@ -30,21 +30,20 @@ exports.createPaciente = async (req, res) => {
 };
 
 exports.paciente = (req, res) => {
-  EsquemaOdontograma.findOne({ _id: req.params.id }).exec(function (err, pac) {
+  EsquemaPaciente.findOne({ _id: req.params.id }).exec(function (err, pac) {
     res.status(200).send(pac);
   });
 };
 
 exports.pacientes = (req, res) => {
-  EsquemaOdontograma.find({}).populate('citas').populate('odontogramas').exec(function (err, pac) {
+  EsquemaPaciente.find({}).populate('citas').populate('odontogramas').exec(function (err, pac) {
     res.status(200).send(pac);
   });
-
 };
 
 exports.cambioDatos = (req, res) => {
   console.log(req.params.id);
-  EsquemaOdontograma.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, pac) => {
+  EsquemaPaciente.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, pac) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -72,12 +71,12 @@ exports.PaginacionPaciente = (req, res, next) => {
   console.log(req.params.num);
   let page = Number(req.params.page) || 1;
 
-  EsquemaOdontograma
+  EsquemaPaciente
     .find({}) // finding all documents
     .skip((perPage * page) - perPage) // in the first page the value of the skip is 0
     .limit(perPage) // output just 9 items
     .exec((err, pac) => {
-      EsquemaOdontograma.countDocuments((err, count) => { // count to calculate the number of pages
+      EsquemaPaciente.countDocuments((err, count) => { // count to calculate the number of pages
         if (err){ return next(err);
         }else{
           res.json( {
@@ -88,7 +87,6 @@ exports.PaginacionPaciente = (req, res, next) => {
           });
         }
         console.log(pac);
-        
       });
     });
 };
@@ -102,10 +100,10 @@ exports.buscarPaciente= (req, res, next) => {
   console.log(req.params.num);
   let page = Number(req.params.page) || 1;
 
-EsquemaOdontograma.find({$or: [{nombre:{ $regex: '.*' + name + '.*' }}, {numCedula:{ $regex: '.*' + cedu + '.*' }} ]}).skip((perPage * page) - perPage) // in the first page the value of the skip is 0
+EsquemaPaciente.find({$or: [{nombre:{ $regex: '.*' + name + '.*' }}, {numCedula:{ $regex: '.*' + cedu + '.*' }} ]}).skip((perPage * page) - perPage) // in the first page the value of the skip is 0
     .limit(perPage) // output just 9 items
     .exec((err, pac) => {
-      EsquemaOdontograma.countDocuments((err, count) => { // count to calculate the number of pages
+      EsquemaPaciente.countDocuments((err, count) => { // count to calculate the number of pages
         if (err){ return next(err);
         }else{
           res.json( {
