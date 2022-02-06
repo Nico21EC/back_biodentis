@@ -58,7 +58,7 @@ loginRoute(router);
 sucuRoute(router);
 facebookRoute(router);
 
-app.get("/", (req, res) => {
+app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
