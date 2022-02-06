@@ -19,7 +19,7 @@ exports.createPaciente = async (req, res) => {
 
   pacientenew.save().then((result) => {
     if (result) {
-      res.json({ message: 'Paciente creado con exito' });
+      res.send(result);
     } else {
       res.status(400).json({ message: 'Error al crear Paciente' });
     }
