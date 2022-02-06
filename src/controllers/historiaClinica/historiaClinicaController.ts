@@ -16,10 +16,10 @@ exports.createHistoria = (req, res) => {
   historianew.tratamientoMedico = req.body.tratamientoMedico;
   historianew.paciente = req.body.paciente;
 
-  EsquemaPaciente.findOne({ nombre: req.body.paciente }, (err, pac) => {
+  EsquemaPaciente.findOne({ _id: req.body.paciente }, (err, pac) => {
     if (pac) {
-      historianew.paciente = pac._id;
-      pac.historia = historianew.paciente;
+      //historianew.paciente = pac._id;
+      pac.historia.push(historianew);
       pac.save();
       console.log(historianew.paciente);
 

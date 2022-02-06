@@ -5,6 +5,4 @@ module.exports = (router) =>{
     router.get('/historias', HistoriasClinica.historias);
     router.get('/numhistorias',HistoriasClinica.numHistorias)
     //router.put('/actulizaCita/:id', Cita.cambioCita);
-
-
 }

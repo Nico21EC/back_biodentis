@@ -1,6 +1,4 @@
 'use strict'
-//import mongoose, { Schema } from 'mongoose';
-//import * as Mongoose from "mongoose";
 
 const mongoose8 = require("mongoose");
 const Schema8 = mongoose8.Schema;
