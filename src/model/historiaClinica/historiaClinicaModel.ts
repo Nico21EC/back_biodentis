@@ -50,7 +50,6 @@ recetas: [{
     type: Schema7.Types.ObjectId,
     ref: 'Receta'
 }]
-
 },
 {
     timestamps:true

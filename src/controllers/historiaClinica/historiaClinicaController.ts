@@ -18,8 +18,8 @@ exports.createHistoria = (req, res) => {
 
   EsquemaPaciente.findOne({ _id: req.body.paciente }, (err, pac) => {
     if (pac) {
-      //historianew.paciente = pac._id;
-      pac.historia.push(historianew);
+      historianew.paciente = req.body.paciente;
+      //pac.historia.push(historianew);
       pac.save();
       console.log(historianew.paciente);
 
