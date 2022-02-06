@@ -26,7 +26,7 @@ exports.createHistoria = (req, res) => {
       historianew.save().then((result) => {
         console.log(result);
         if (result) {
-          res.json({ message: 'Paciente en historia clinica creado con exito' });
+          res.send(result);
         } else {
           res.status(400).json({ message: 'Error al crear Historia Clinica' });
         }
