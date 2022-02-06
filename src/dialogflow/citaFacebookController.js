@@ -104,7 +104,7 @@ async function receivedMessage(event) {
   var quickReply = message.quick_reply;
 
   if (isEcho) {
-    //handleEcho(messageId, appId, metadata);
+    handleEcho(messageId, appId, metadata);
     return;
   } else if (quickReply) {
     handleQuickReply(senderId, quickReply, messageId);
@@ -136,7 +136,7 @@ async function setSessionAndUser(senderId) {
 
 async function handleQuickReply(senderId, quickReply, messageId) {
   let quickReplyPayload = quickReply.payload;
-  let a;
+  
   console.log(
     "Quick reply for message %s with payload %s",
     messageId,
@@ -180,7 +180,7 @@ async function handleMessage(message, sender) {
         };
         replies.push(reply);
       });
-      await sendQuickReply(sender, message.quickReplies.title, replies,"");
+      await sendQuickReply(sender, message.quickReplies.title, replies);
       break;
     case "image": // image
       await sendImageMessage(sender, message.image.imageUri);

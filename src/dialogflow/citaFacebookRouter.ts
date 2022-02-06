@@ -1,4 +1,4 @@
-const Facebook=require('./citaFacebookController.ts');
+const Facebook=require('./citaFacebookController.js');
 module.exports = (router) =>{
     
     router.get('/webhook/', Facebook.facebookCitas);
