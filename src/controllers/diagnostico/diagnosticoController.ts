@@ -4,19 +4,18 @@ var Esquema = require('../../model/diagnostico/diagnosticoModel.ts');
 var EsquemaOdontograma = require('../../model/odontograma/odontogramaModel.ts');
 
 exports.creatediagnostico = async (req, res) => {
-    console.log(req);
+    console.log(req.body);
     const diagnosticonew = new Esquema();
     diagnosticonew.diagnostico = req.body.diagnostico;
     diagnosticonew.odontograma = req.body.odontograma;
-
+    
     await diagnosticonew.save().then((result) => {
-                EsquemaOdontograma.findOne({ _id: req.body.odontograma }, (err, odontograma) => {
-                    console.log(diagnosticonew.paciente)
+                EsquemaOdontograma.findOne({ _id:req.body.odontograma }, (err, odontograma) => {
                     if (odontograma) {
                         odontograma.diagnosticos.push(diagnosticonew);
                         odontograma.save();
-                        res.json({ message: 'Diagnostico en Odontograma creado con exito' });
-                    } else if (err) {
+                        res.send(result);
+                    } else{
                         res.status(400).json({ message: 'Error al crear Diagnostico' })
                     }
                 });

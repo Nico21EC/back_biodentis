@@ -7,11 +7,11 @@ const odontogramaEsquema = new Schema8({
     fechaOdonto: {
         type: Date,
         require:false,
-    },diagnosticos: [{
+    },
+    diagnosticos: [{
         type: Schema8.Types.ObjectId,
         ref: 'Diagnostico'
     }]
-    
 },
     {
         timestamps: true
