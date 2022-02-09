@@ -24,7 +24,7 @@ exports.createOdontograma = (req, res) => {
 };
 
 exports.diagnosticoOdonto = (req, res) => {
-  Esquema.find({_id:req.body.odontograma}).populate('diagnosticos').exec(function (err, pac) {
+  Esquema.find({_id:req.params.id}).populate('diagnosticos').exec(function (err, pac) {
     res.status(200).send(pac);
   });
 };

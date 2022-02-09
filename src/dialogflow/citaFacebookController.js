@@ -246,7 +246,7 @@ async function handleMessages(messages, sender) {
     let cards = [];
     while (i < messages.length) {
       switch (messages[i].message) {
-        
+
         case "card":
           for (let j = i; j < messages.length; j++) {
             if (messages[j].message === "card") {
@@ -257,6 +257,7 @@ async function handleMessages(messages, sender) {
           await handleCardMessages(cards, sender);
           cards = [];
           break;
+          
         case "text":
           await handleMessage(messages[i], sender);
           break;
