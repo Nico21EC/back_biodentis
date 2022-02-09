@@ -114,15 +114,17 @@ async function receivedMessage(event) {
     //send message to dialogflow
     console.log("MENSAJE DEL USUARIO: ", messageText);
     await sendToDialogFlow(senderId, messageText);
-  } else if (messageAttachments) {
-    handleMessageAttachments(messageAttachments, senderId);
-  }
+  //} else if (messageAttachments) {
+    //handleMessageAttachments(messageAttachments, senderId);
+  //}
+}
 }
 
+/*
 function handleMessageAttachments(messageAttachments, senderId) {
   //for now just reply
   sendTextMessage(senderId, "Archivo adjunto recibido... gracias! .");
-}
+}*/
 
 async function setSessionAndUser(senderId) {
   try {
@@ -244,6 +246,7 @@ async function handleMessages(messages, sender) {
     let cards = [];
     while (i < messages.length) {
       switch (messages[i].message) {
+        
         case "card":
           for (let j = i; j < messages.length; j++) {
             if (messages[j].message === "card") {

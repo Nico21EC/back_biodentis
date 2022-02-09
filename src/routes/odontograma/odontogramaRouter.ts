@@ -2,5 +2,5 @@ const Odontograma=require('../../controllers/odontograma/odontogramaController.t
 
 module.exports = (router) =>{
     router.post('/crearOdontograma', Odontograma.createOdontograma);
-    router.get('/diagnosticosOdont', Odontograma.diagnosticoOdonto);
+    router.get('/diagnosticosOdont/:id', Odontograma.diagnosticoOdonto);
 }
