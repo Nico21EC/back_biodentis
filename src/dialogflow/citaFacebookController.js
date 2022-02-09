@@ -184,9 +184,10 @@ async function handleMessage(message, sender) {
       });
       await sendQuickReply(sender, message.quickReplies.title, replies);
       break;
+      /*
     case "image": // image
       await sendImageMessage(sender, message.image.imageUri);
-      break;
+      break;*/
     case "payload":
       let desestructPayload = structProtoToJson(message.payload);
       var messageData = {
@@ -257,7 +258,7 @@ async function handleMessages(messages, sender) {
           await handleCardMessages(cards, sender);
           cards = [];
           break;
-          
+
         case "text":
           await handleMessage(messages[i], sender);
           break;
@@ -341,12 +342,13 @@ async function getUserData(senderId) {
 }
 
 async function sendTextMessage(recipientId, text) {
+  /*
   if (text.includes("{first_name}") || text.includes("{last_name}")) {
     let userData = await getUserData(recipientId);
     text = text
       .replace("{first_name}", userData.first_name)
       .replace("{last_name}", userData.last_name);
-  }
+  }*/
   var messageData = {
     recipient: {
       id: recipientId,
@@ -362,7 +364,7 @@ async function sendTextMessage(recipientId, text) {
  * Send an image using the Send API.
  *
  */
-async function sendImageMessage(recipientId, imageUrl) {
+/*async function sendImageMessage(recipientId, imageUrl) {
   var messageData = {
     recipient: {
       id: recipientId,
@@ -378,7 +380,7 @@ async function sendImageMessage(recipientId, imageUrl) {
   };
   await callSendAPI(messageData);
 }
-
+*/
 /*
  * Send a button message using the Send API.
  *
@@ -551,6 +553,3 @@ function isDefined(obj) {
 
   return obj != null;
 }
-
-      
-    
