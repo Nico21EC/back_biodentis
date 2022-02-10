@@ -32,4 +32,8 @@ exports.creatediagnostico = async (req, res) => {
     )
 };
 
-
+exports.diagnosticoOdonto = (req, res) => {
+    Esquema.find({odontograma:req.params.id}).exec(function (err, odonto) {
+      res.status(200).send(odonto);
+    });
+  };
