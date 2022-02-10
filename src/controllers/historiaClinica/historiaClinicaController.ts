@@ -19,10 +19,8 @@ exports.createHistoria = (req, res) => {
   EsquemaPaciente.findOne({ _id: req.body.paciente }, (err, pac) => {
     if (pac) {
       historianew.paciente = req.body.paciente;
-      //pac.historia.push(historianew);
       pac.save();
       console.log(historianew.paciente);
-
       historianew.save().then((result) => {
         console.log(result);
         if (result) {
@@ -37,10 +35,8 @@ exports.createHistoria = (req, res) => {
     }else{
       res.status(400).json({ message: 'Error al encontrar paciente' });
     }
-  })
-
-
-
+  }
+  )
 };
 exports.historias = (req, res) => {
   EsquemaHistoria.find({}).populate('recetas').populate('tratamientos').populate('paciente').exec(function (err, historia) {

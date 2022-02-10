@@ -8,21 +8,28 @@ exports.creatediagnostico = async (req, res) => {
     const diagnosticonew = new Esquema();
     diagnosticonew.diagnostico = req.body.diagnostico;
     diagnosticonew.odontograma = req.body.odontograma;
-    
-    await diagnosticonew.save().then((result) => {
-                EsquemaOdontograma.findOne({ _id:req.body.odontograma }, (err, odontograma) => {
-                    if (odontograma) {
-                        odontograma.diagnosticos.push(diagnosticonew);
-                        odontograma.save();
-                        res.send(result);
-                    } else{
-                        res.status(400).json({ message: 'Error al crear Diagnostico' })
-                    }
+
+    EsquemaOdontograma.findOne({ _id: diagnosticonew.odontograma }, (err, odonto) => {
+        if (odonto) {
+            diagnosticonew.odontograma = req.body.odontograma;
+            odonto.save();
+            console.log(diagnosticonew.paciente);
+            diagnosticonew.save().then((result) => {
+                console.log(result);
+                if (result) {
+                    res.send(result);
+                } else {
+                    res.status(400).json({ message: 'Error al crear Diagnostico' });
+                }
+            })
+                .catch((error) => {
+                    res.status(500).json({ error });
                 });
-            }).catch((error) => {
-                res.status(500).json({ error });
-            });
+        } else {
+            res.status(400).json({ message: 'Error al encontrar odontograma' });
+        }
+    }
+    )
 };
 
 
-  

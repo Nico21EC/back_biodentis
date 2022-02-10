@@ -15,6 +15,10 @@ diagnostico:[{
 tratamiento: {
     type: Schema6.Types.ObjectId,
     ref: 'Tratamiento'
+},
+odontograma:{
+    type:Schema6.Types.ObjectId,
+    ref: 'Odontograma'
 }
 },
 {
