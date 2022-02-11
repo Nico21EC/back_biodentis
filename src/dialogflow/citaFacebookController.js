@@ -180,6 +180,7 @@ function sendToApiAi(sender, text) {
               //unhandled action, just send back the text
               sendTextMessage(sender, responseText);
               }
+            }
 /*
 const config = require("../config/config");
 var Esquema=require('./citaFacebookModel.ts');
