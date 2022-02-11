@@ -18,12 +18,15 @@ const sessionIds = new Map();
 
 exports.facebookVerification = (req, res) => {
   console.log("request");
+  console.log(req);
   if (
-    req.query["hub.mode"] === "suscribe" &&
+    
+    req.query["hub.mode"] === "subscribe" &&
     req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
   ) {
     res.status(200).send(req.query["hub.challenge"]);
   } else {
+    console.log(res);
     console.error("Failed validation. Asegurese que los tokens coincidan");
     res.sendStatus(403);
   }
