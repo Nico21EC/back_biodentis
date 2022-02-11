@@ -40,7 +40,7 @@ exports.facebookDialog = (req, res) => {
       var timeOfEvent = pageEntry.time;
       pageEntry.messaging.forEach(function (messagingEvent){
         if(messagingEvent.message){
-          receiveMessage(messagingEvent);
+          receivedMessage(messagingEvent);
         }else{
           console.log("Webhook received unknown messagingEvent:", messagingEvent);
         }
