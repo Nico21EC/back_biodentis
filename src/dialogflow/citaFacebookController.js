@@ -193,7 +193,7 @@ const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
 */
 /*
-exports.facebookCitas =(req, res) => {
+exports.facebookCitas =(req, res) => {succ
         if (
           req.query["hub.mode"] === "subscribe" &&
           req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
