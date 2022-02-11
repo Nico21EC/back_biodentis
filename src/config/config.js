@@ -5,8 +5,8 @@ module.exports = {
     FB_APP_SECRET: "c67d3e9deadfc8d469618825be4b21b4",
     
     //Credenciales adicionales
-    API_AI_CLIENT_ACCESS_TOKEN: "393d07d9a205248f8025d5a56061918d995d261e",
-    SERVER_URL: "https://biodentis.herokuapp.com/messenger/webhook",
+    API_AI_CLIENT_ACCESS_TOKEN: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDcMyCHpVTr6bgZ\nouqhZl4rde3udjxdPX1j7ChahPcM3+sq9cm/eBaYNOpCppsIEVuFig+cjvwczrfR\nQNekWSZuieGgZiWRo45xVgqnxiyP345y15kCCtsNXbGPZQHSKs0pGyEiSovuBXy0\nVrdSppsDsbXw4Qvu9zXVaVpywMqaHUYWilLXomNSCvORrTnErRiHAkQGLfwv02xR\ncnhjKK5PK2PwlvnX3yqTQ0vUIcwFbqQ41UyOqrsQy3v4tZwi+kLGoIbNPidHqb6T\nKCpGs9zeYN1Dk7IRyPxbTIb+scYWHuTdp0k4yuYNPghqFazUOg8MXqhOhwsVeAtu\nVf2DdNHpAgMBAAECggEADI28fwhhGsDe6uc9/APpLDLYG7vswjnIo2oAtBhqOdKJ\nGNmdQExbhEOiT11Oge3P+ROWMNVU3jeSzhLu3Od98bNaFn6g5Rz4itGVO6UfQByP\nhZm6KWdcdj94VyOgeYV1cfmiQs8SVOYheHxDaQYCj9VasAyf54rpB6RBHmWv8GeE\n4rAdKouErS+x6bnaDj3/EULR++tCfh/kwARl7aCFkoodYhb0l3HeWKzQ60nCYXJU\n4yyOqraP4+V/Ujqy9fivuR+EeRD6QddHOXNBngD+HoqghnybOxyTkZ54wrIv31Tk\nw5LGqkuLTnXqG1z4GooOhJWCh0KC4Zic451b6pEvmQKBgQD4ehf99RQtYOCc7S4r\nm6W0Q90jSJHKQHQJfnYvtENgjVBH/J/16yvMYg/mX8wUOxER4AIpDx6tZjRdu+5s\nydys0mD8lJqu//81YAVp7+6+76LHziQ+DNMeXd3b/bibXRmqpFxUWRkbtLQcy0qD\nnwDe80C56P32CA2plKMlkpOJowKBgQDi3dxtBEIcre8ugvVjx+Mu/LeNUbfKAdiF\n+Ecv0coCqv4Y8Zyzu2U7wmCvRQz0qyu1FvgDCCohWSzQOYvskP23gF56iiwtwWJ2\nCxa3j4nt3YrglcG2exjrwiH7IMxbWB+rJbp3ePuK0fwwFtIgpcbFG8wGnlpnDObu\n0t544hpHAwKBgQDZv2U3EIbWHYe4/cDwRj44cyBfw0C/1SvbBg/cTkSdYDlyXFhx\n0d1YBreYU2ssb3bOC1jZUn63xlEts3uFqoDQkqybrD7CDWVBCRy1caXvfWFRZ70r\nA2IfwnKiTv5waG4NtGuVH195gCo28ZAjODwzJUkboqqr6PLQIYm3a3QPsQKBgGaF\nPAdH1ViAgYXTSHE+8ztYmNoUA6oWC3L/L6w8cb2i6BD9noLaPHU08dxCqAgpEidT\nqeA04FURp16xornVC9LQ/+EAb9Z9fbE6cZmiFAKaCxhSlKeSGUDxCcoimDbvK+B7\nvDghRAsHuZ9BsNNwFtMcLKcRCGlpOzLRuBeIlbdhAoGAb5oXSPJq1HcNRp9ZB25E\no7GcKxrq4g7SGWp+UzDwnL/23Mx5OeOoJIJiieU4rbxvgja5hlSTwUG0EEYSnmy2\n6k4LEj3YCsf1ZVHedCUDhZH2js7taWT6ZdEECDLo1Pq5Y68SBbGWrchr8lHfRNcV\nJBs1BPRca8t2j97de4o1r2E=\n-----END PRIVATE KEY-----\n",
+    SERVER_URL: "https://biodentis.herokuapp.com/messenger/",
 
     //Google project credentials 
     GOOGLE_PROJECT_ID: "citasbot-dmxk",
