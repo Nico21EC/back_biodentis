@@ -3,6 +3,10 @@ module.exports = {
     FB_PAGE_TOKEN : "EAAJAdjSzCA8BAGbyitQxoiFty9EdQHCFZByTYM86E6Yd7flkiHVh6Emxt3H9OLJZBdKev2VEavOlNGbJ5NeZBYJ0HMbKuBSCsfjZAKJwwxnBOEtAAPZARgdgqBSqALXI68dcqIUCPiqPPZAWayLALxez722T11HlzSLFG2KSelZAEBFfcxZB3ZBZCHzZAQUJ66ftLUZD",
     FB_VERIFY_TOKEN: "BiodentisTokenBot",
     FB_APP_SECRET: "c67d3e9deadfc8d469618825be4b21b4",
+    
+    //Credenciales adicionales
+    API_AI_CLIENT_ACCESS_TOKEN: "393d07d9a205248f8025d5a56061918d995d261e",
+    SERVER_URL: "https://biodentis.herokuapp.com/messenger/webhook",
 
     //Google project credentials 
     GOOGLE_PROJECT_ID: "citasbot-dmxk",

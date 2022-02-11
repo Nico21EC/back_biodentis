@@ -1,7 +1,74 @@
 const response20 = require("express")
 
 'üse strict'
+const apiai = require("apiai");
+const express = require("express");
+const bodyParser = require("body-parser");
+const uuid = require("uuid");
+const axios = require("axios");
 
+const config = require("../config/config.js");
+const { receiveMessageOnPort } = require("worker_threads");
+const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN,{
+  language: "en",
+  requestSource: "fb"
+});
+
+const sessionIds = new Map();
+
+exports.facebookVerification = (req, res) => {
+  console.log("request");
+  if (
+    req.query["hub.mode"] === "suscribe" &&
+    req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
+  ) {
+    res.status(200).send(req.query["hub.challenge"]);
+  } else {
+    console.error("Failed validation. Asegurese que los tokens coincidan");
+    res.sendStatus(403);
+  }
+};
+
+exports.facebookDialog = (req, res) => {
+  var data = req.body;
+  if(data.object == "page"){
+    data.entry.forEach(function (pageEntry) {
+      var pageID = pageEntry.id;
+      var timeOfEvent = pageEntry.time;
+      pageEntry.messaging.forEach(function (messagingEvent){
+        if(messagingEvent.message){
+          receiveMessage(messagingEvent);
+        }else{
+          console.log("Webhook received unknown messagingEvent:", messagingEvent);
+        }
+      });
+    });
+    res.sendStatus(200);
+  }
+}
+
+function receivedMessage(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfMessage = event.timestamp;
+  var message = event.message;
+  if(!sessionIds.has(senderID)){
+    sessionIds.set(senderID,uuid.v1());
+  }
+
+  var messageId = message.mid;
+  var appId = message.app_id;
+  var metadata = message.metadata;
+  var messageText = message.text;
+  var messageAttachments = message.attachments;
+  if(messageText){
+    sendToApiAi (senderID, messageText);
+  }else if(messageAttachments){
+    handleMessageAttachments(messageAttachments, senderID);
+  }
+}
+
+/*
 const config = require("../config/config");
 var Esquema=require('./citaFacebookModel.ts');
 const dialogflow = require("./dialogflow");
@@ -11,7 +78,8 @@ const { structProtoToJson } = require("./structFunctions");
 const request = require("express");
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
-
+*/
+/*
 exports.facebookCitas =(req, res) => {
         if (
           req.query["hub.mode"] === "subscribe" &&
@@ -24,9 +92,9 @@ exports.facebookCitas =(req, res) => {
         }
  };
 
- /*
+ 
  exports.facebookConnection = (req, res)=> {
-  const agent = new WebhookClient({ request, response });
+  const agent = new WebhookClient({ request:req , response:res });
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
   console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
  
@@ -39,6 +107,11 @@ exports.facebookCitas =(req, res) => {
     agent.add(`I'm sorry, can you try again?`);
   }
 
+  function IniciarConversacion(agent) {
+    agent.add(`I didn't understand`);
+    agent.add(`I'm sorry, can you try again?`);
+  }
+
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
@@ -46,8 +119,9 @@ exports.facebookCitas =(req, res) => {
   // intentMap.set('your intent name here', googleAssistantHandler);
   agent.handleRequest(intentMap);
  }
- */
- /*
+ 
+
+ 
  exports.facebookwebhook= (req, res) => {
    
         var data = req.body;
@@ -74,7 +148,7 @@ exports.facebookCitas =(req, res) => {
             });
           });
         }
-    };*/
+    };
 
 
 // Messenger API parameters
@@ -146,11 +220,11 @@ async function receivedMessage(event) {
 }
 }
 
-/*
+
 function handleMessageAttachments(messageAttachments, senderId) {
   //for now just reply
   sendTextMessage(senderId, "Archivo adjunto recibido... gracias! .");
-}*/
+}
 
 async function setSessionAndUser(senderId) {
   try {
@@ -210,10 +284,10 @@ async function handleMessage(message, sender) {
       });
       await sendQuickReply(sender, message.quickReplies.title, replies);
       break;
-      /*
+      
     case "image": // image
       await sendImageMessage(sender, message.image.imageUri);
-      break;*/
+      break;
     case "payload":
       let desestructPayload = structProtoToJson(message.payload);
       var messageData = {
@@ -368,13 +442,12 @@ async function getUserData(senderId) {
 }
 
 async function sendTextMessage(recipientId, text) {
-  /*
   if (text.includes("{first_name}") || text.includes("{last_name}")) {
     let userData = await getUserData(recipientId);
     text = text
       .replace("{first_name}", userData.first_name)
       .replace("{last_name}", userData.last_name);
-  }*/
+  }
   var messageData = {
     recipient: {
       id: recipientId,
@@ -386,11 +459,7 @@ async function sendTextMessage(recipientId, text) {
   await callSendAPI(messageData);
 }
 
-/*
- * Send an image using the Send API.
- *
- */
-/*async function sendImageMessage(recipientId, imageUrl) {
+async function sendImageMessage(recipientId, imageUrl) {
   var messageData = {
     recipient: {
       id: recipientId,
@@ -406,11 +475,7 @@ async function sendTextMessage(recipientId, text) {
   };
   await callSendAPI(messageData);
 }
-*/
-/*
- * Send a button message using the Send API.
- *
- */
+
 async function sendButtonMessage(recipientId, text, buttons) {
   var messageData = {
     recipient: {
@@ -449,10 +514,6 @@ async function sendGenericMessage(recipientId, elements) {
   await callSendAPI(messageData);
 }
 
-/*
- * Send a message with Quick Reply buttons.
- *
- */
 async function sendQuickReply(recipientId, text, replies, metadata) {
   var messageData = {
     recipient: {
@@ -468,10 +529,6 @@ async function sendQuickReply(recipientId, text, replies, metadata) {
   await callSendAPI(messageData);
 }
 
-/*
- * Turn typing indicator on
- *
- */
 function sendTypingOn(recipientId) {
   var messageData = {
     recipient: {
@@ -483,10 +540,6 @@ function sendTypingOn(recipientId) {
   callSendAPI(messageData);
 }
 
-/*
- * Turn typing indicator off
- *
- */
 function sendTypingOff(recipientId) {
   var messageData = {
     recipient: {
@@ -498,11 +551,6 @@ function sendTypingOff(recipientId) {
   callSendAPI(messageData);
 }
 
-/*
- * Call the Send API. The message data goes in the body. If successful, we'll
- * get the message id in a response
- *
- */
 function callSendAPI(messageData) {
   return new Promise((resolve, reject) => {
     request(
@@ -579,3 +627,4 @@ function isDefined(obj) {
 
   return obj != null;
 }
+*/

@@ -27,17 +27,22 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "actions-on-google": "^3.0.0",
+    "apiai": "^4.0.3",
+    "axios": "^0.25.0",
+    "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "dialogflow": "^1.2.0",
     "dialogflow-fulfillment": "^0.6.1",
     "dotenv": "^6.2.0",
+    "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^5.13.14",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

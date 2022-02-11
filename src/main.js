@@ -3,13 +3,18 @@ const port = process.env.PORT || 3001;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+
 const mongooseMain = require('mongoose');
+
+//Import Config file
+const config = require("./config/config.js")
 
 const cors= require('cors');
 const bodyParse=require('body-parser');
 
 app.use(bodyParse.urlencoded({extended:false}));
 app.use(bodyParse.json());
+app.use(express.static("public"));
 
   mongooseMain.connect(
       "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
