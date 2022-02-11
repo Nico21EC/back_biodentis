@@ -19,6 +19,7 @@ const sessionIds = new Map();
 exports.facebookVerification = (req, res) => {
   console.log("request");
   console.log("REQ QUERY: ",req.query);
+  console.log("REQ QUERY: ",res.query);
   if (
     req.query["hub.mode"] === "subscribe" &&
     req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
