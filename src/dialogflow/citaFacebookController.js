@@ -1,5 +1,4 @@
 const response20 = require("express")
-
 'üse strict'
 
 const config = require("../config/config");
@@ -24,7 +23,6 @@ exports.facebookCitas =(req, res) => {succ
         }
  };
 
- 
  exports.facebookConnection = (req, res)=> {
   const agent = new WebhookClient({ request:req , response:res });
   console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
