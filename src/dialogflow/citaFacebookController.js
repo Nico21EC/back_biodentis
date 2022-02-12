@@ -11,12 +11,15 @@ const request = require("express");
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
 
-exports.facebookCitas =(req, res) => {succ
+exports.facebookCitas =(req, res) => 
+{
+  succ
         if (
           req.query["hub.mode"] === "subscribe" &&
           req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
         ) {
           res.status(200).send(req.query["hub.challenge"]);
+          console.log("Validaion exitosa");
         } else {
           console.error("Failed validation. Make sure the validation tokens match.");
           res.sendStatus(403);
