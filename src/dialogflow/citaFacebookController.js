@@ -13,13 +13,12 @@ const {Card, Suggestion} = require('dialogflow-fulfillment');
 
 exports.facebookCitas =(req, res) => 
 {
-  succ
         if (
           req.query["hub.mode"] === "subscribe" &&
           req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
         ) {
           res.status(200).send(req.query["hub.challenge"]);
-          console.log("Validaion exitosa");
+          console.log("Validacion exitosa");
         } else {
           console.error("Failed validation. Make sure the validation tokens match.");
           res.sendStatus(403);
