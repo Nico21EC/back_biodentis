@@ -1,4 +1,4 @@
-const response20 = require("express")
+const response20 = require("express");
 'üse strict'
 
 const config = require("../config/config");
@@ -10,6 +10,7 @@ const { structProtoToJson } = require("./structFunctions");
 const request = require("express");
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
+
 
 exports.facebookCitas =(req, res) => 
 {
@@ -27,26 +28,27 @@ exports.facebookCitas =(req, res) =>
 
  exports.facebookConnection = (req, res)=> {
   const agent = new WebhookClient({ request:req , response:res });
-  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
-  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
+  console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
+  console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
  
   function welcome(agent) {
-    agent.add(`Welcome to my agent!`);
+    agent.add('Welcome to my agent!');
   }
  
   function fallback(agent) {
-    agent.add(`I didn't understand`);
-    agent.add(`I'm sorry, can you try again?`);
+    agent.add("I didn't understand");
+    agent.add("I'm sorry, can you try again?");
   }
 
-  function IniciarConversacion(agent) {
-    agent.add(`I didn't understand`);
-    agent.add(`I'm sorry, can you try again?`);
+  function PruebaWebhook(agent) {
+    agent.add("Estoy enviando respuesta desde el webhook");
+    //agent.add("I'm sorry, can you try again?");
   }
 
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
+  intentMap.set('PruebaWebhook', PruebaWebhook);
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
   agent.handleRequest(intentMap);
