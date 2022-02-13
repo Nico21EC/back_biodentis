@@ -77,6 +77,7 @@ const tratamientoRoute = require('./routes/tratamiento/tratamientoRoute.ts');
 const reservaRoute = require('./routes/reserva/reservaRoute.ts');
 const facebookRoute = require('./dialogflow/citaFacebookRouter.ts');
 const { text } = require("body-parser");
+//const { config } = require("process");
 
 sucuRoute(router);
 citaRoute(router);
@@ -241,8 +242,16 @@ function callSendAPI(messageData) {
   await axios.post(url, messageData)
     .then(function (response) {
    */
-  return new Promise((resolve, reject) => {
-    axios(
+
+    const config = {
+        method: 'post',
+        url: "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN,
+        headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
+    }
+    let res = axios(config, messageData)
+  return new Promise((resolve, reject)  => {
+    /*
+    request(
       {
         uri: "https://graph.facebook.com/v6.0/me/messages",
         qs: {
@@ -250,8 +259,9 @@ function callSendAPI(messageData) {
         },
         method: "POST",
         json: messageData,
-        header: ('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'),
-      },
+        header: {'Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'},
+      },*/
+      res,
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var recipientId = body.recipient_id;
@@ -280,7 +290,7 @@ function callSendAPI(messageData) {
           );
         }
       }
-    );
+    //);
   });
 }
 
