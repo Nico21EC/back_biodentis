@@ -8,6 +8,7 @@ const axios = require("axios");
 const apiai = require("apiai");
 const request = require("request");
 const { structProtoToJson } = require("./dialogflow/structFunctions.js");
+const dialogflow = require("./dialogflow/dialogflow.js");
 
 const mongooseMain = require('mongoose');
 
