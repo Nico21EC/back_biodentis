@@ -364,40 +364,30 @@ async function receivedMessage(event) {
     callSendAPI(messageData);
   };
 
-  function callSendAPI(messageData) {
+  async function callSendAPI(messageData)  {
     console.log("call send API", messageData);
-    return new Promise((resolve, reject) => {
-      request(
+     return new Promise((resolve, reject) => {
+      await request(
         {
           uri: "https://graph.facebook.com/v6.0/me/messages",
-          qs: {
-            access_token: config.FB_PAGE_TOKEN,
-          },
+          qs: {access_token: config.FB_PAGE_TOKEN,},
           method: "POST",
           json: messageData,
         },
         function (error, response, body) {
-          if (!error && response.statusCode == 200)
-           {
+          console.log("")
+          if (!error && response.statusCode == 200){
             var recipientId = body.recipient_id;
             var messageId = body.message_id;
             if (messageId) {
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
-              console.log(
-                "Successfully called Send API for recipient %s",
-                recipientId
-              );
+              console.log("Successfully called Send API for recipient %s", recipientId);
             }
             resolve();
           } else {
             reject();
-            console.error(
-              "Failed calling Send API",
-              response.statusCode,
-              response.statusMessage,
-              body.error
-            );
+            console.error("Failed calling Send API", response.statusCode, response.statusMessage,body.error);
           }
         }
       );
