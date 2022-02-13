@@ -243,12 +243,12 @@ function callSendAPI(messageData) {
     .then(function (response) {
    */
 
-    const config = {
+    const config_axios = {
         method: 'post',
         url: "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN,
         headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
     }
-    let res = axios(config, messageData)
+    let res = axios(config_axios, messageData)
   return new Promise((resolve, reject)  => {
     /*
     request(
