@@ -177,6 +177,8 @@ function sendToApiAi(sender, text) {
   apiaiRequest.on("response", response => {
     if (isDefined(response.result)) {
       handleApiAiResponse(sender, response);
+    }else{
+      console.log("NO ENVIAAAAA ERORRR")
     }
   });
   apiaiRequest.on("error", error => console.error(error));
