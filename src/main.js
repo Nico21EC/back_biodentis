@@ -261,12 +261,10 @@ function callSendAPI(messageData) {
         json: messageData,
         header: {'Access-Control-Allow-Headers':'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'},
       },
-      res,
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
           var recipientId = body.recipient_id;
           var messageId = body.message_id;
-
           if (messageId) {
             console.log(
               "Successfully sent message with id %s to recipient %s",
