@@ -364,9 +364,9 @@ async function receivedMessage(event) {
     callSendAPI(messageData);
   };
 
-  async function callSendAPI(messageData)  {
+   function callSendAPI(messageData)  {
     console.log("call send API", messageData);
-     return new Promise((resolve, reject) => {
+     return new Promise(async (resolve, reject)  => {
       await request(
         {
           uri: "https://graph.facebook.com/v6.0/me/messages",
