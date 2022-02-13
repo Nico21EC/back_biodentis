@@ -62,7 +62,7 @@ const router = express.Router();
 app.use(cors());
 app.use(express.json());
 
-app.use('/', router);
+app.use('/messenger', router);
 
 const loginRoute = require("./routes/login/loginRoute.ts");
 const sucuRoute = require('./routes/sucursales/sucursalesRoute.ts');
@@ -92,7 +92,7 @@ loginRoute(router);
 sucuRoute(router);
 facebookRoute(router);
 
-app.get("/", (req, res) => {
+app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
