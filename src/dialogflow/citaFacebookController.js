@@ -1,8 +1,7 @@
-const response20 = require("express");
 'üse strict'
 
-const config = require("../config/config");
-var Esquema=require('./citaFacebookModel.ts');
+const config = require("../config/config.js");
+var Esquema = require('./citaFacebookModel.ts');
 const dialogflow = require("./dialogflow");
 const uuid = require("uuid");
 const axios = require("axios");

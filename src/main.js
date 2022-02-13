@@ -29,12 +29,34 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Content-Type','application/json');
+  res.header('Content-Type', 'application/json');
   next();
-
 });
 
+// Messenger API parameters
+if (!config.FB_PAGE_TOKEN) {
+  throw new Error("missing FB_PAGE_TOKEN");
+}
+if (!config.FB_VERIFY_TOKEN) {
+  throw new Error("missing FB_VERIFY_TOKEN");
+}
+if (!config.GOOGLE_PROJECT_ID) {
+  throw new Error("missing GOOGLE_PROJECT_ID");
+}
+if (!config.DF_LANGUAGE_CODE) {
+  throw new Error("missing DF_LANGUAGE_CODE");
+}
+if (!config.GOOGLE_CLIENT_EMAIL) {
+  throw new Error("missing GOOGLE_CLIENT_EMAIL");
+}
+if (!config.GOOGLE_PRIVATE_KEY) {
+  throw new Error("missing GOOGLE_PRIVATE_KEY");
+}
+if (!config.FB_APP_SECRET) {
+  throw new Error("missing FB_APP_SECRET");
+}
 
+const sessionIds = new Map();
 
 mongooseMain.connect(
   "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
@@ -77,7 +99,7 @@ const recetaRoute = require('./routes/receta/recetaRoute.ts');
 const tratamientoRoute = require('./routes/tratamiento/tratamientoRoute.ts');
 const reservaRoute = require('./routes/reserva/reservaRoute.ts');
 const facebookRoute = require('./dialogflow/citaFacebookRouter.ts');
-const { text } = require("body-parser");
+
 //const { config } = require("process");
 
 sucuRoute(router);
@@ -98,12 +120,13 @@ app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
-app.get("/messenger/webhook", function (req, res) {
+router.get("/messenger/webhook", function (req, res) {
   console.log(req);
   if (
     req.query["hub.mode"] === "subscribe" &&
     req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
   ) {
+    console.log("FACEBOOK VER:", res);
     res.status(200).send(req.query["hub.challenge"]);
     console.log("Validacion exitosa");
   } else {
@@ -112,27 +135,27 @@ app.get("/messenger/webhook", function (req, res) {
   }
 });
 
+/*
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
-  language: "en",
+  language: "es",
   requestSource: "fb"
 });
 
-const sessionIds = new Map();
+const sessionIds = new Map();*/
 
 app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
 });
 
-app.post("/messenger/webhook/", function (req, res) {
+router.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
-  // Make sure this is a page subscription
+  console.log("post data object: page". req.body);
   if (data.object == "page") {
-    // Iterate over each entry
-    // There may be multiple if batched
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
-      // Iterate over each messaging event
+      console.log("page entry:", pageEntry.id);
+      console.log("page entry:", pageEntry.time);
       pageEntry.messaging.forEach(function (messagingEvent) {
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
@@ -143,13 +166,11 @@ app.post("/messenger/webhook/", function (req, res) {
         }
       });
     });
-    //Assume all went well,
-    //You must send back a 200, within 20 seconds
   }
 });
 
 function receivedMessage(event) {
-  console.log("EVENTTTTTT",event)
+  console.log("EVENTTTTTT", event)
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
@@ -179,7 +200,7 @@ function sendToApiAi(sender, text) {
   apiaiRequest.on("response", response => {
     if (isDefined(response.result)) {
       handleApiAiResponse(sender, response);
-    }else{
+    } else {
       console.log("NO ENVIAAAAA")
     }
   });
@@ -250,7 +271,7 @@ function callSendAPI(messageData) {
         headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
     }
     let res = axios(config_axios, messageData)*/
-  return new Promise((resolve, reject)  => {
+  return new Promise((resolve, reject) => {
     request(
       {
         uri: "https://graph.facebook.com/v6.0/me/messages",
@@ -259,7 +280,7 @@ function callSendAPI(messageData) {
         },
         method: "POST",
         json: messageData,
-        header: {'Access-Control-Allow-Headers':'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'},
+        header: { 'Access-Control-Allow-Headers': 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method' },
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
