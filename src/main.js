@@ -149,14 +149,13 @@ app.listen(port, () => {
 
 app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
-  console.log("post data object: page",req.body);
+  //console.log("POST DATA OBJECT: page",req.body);
   if (data.object == "page") {
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
-      console.log("page entry:", pageEntry.id);
-      console.log("page entry:", pageEntry.time);
       pageEntry.messaging.forEach(function (messagingEvent) {
+        console.log("PAGE ENTRY MESSAGING:",messagingEvent.message)
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
         } else if (messagingEvent.postback) {
