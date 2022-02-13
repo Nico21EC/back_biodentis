@@ -195,39 +195,48 @@ const sendTypingOn = (recipientId) => {
   callSendAPI(messageData);
 };
 
-const callSendAPI = async (messageData) => {
-  const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
+function callSendAPI(messageData) {
+  return new Promise((resolve, reject) => {
+    request(
+      {
+        uri: "https://graph.facebook.com/v6.0/me/messages",
+        qs: {
+          access_token: config.FB_PAGE_TOKEN,
+        },
+        method: "POST",
+        json: messageData,
+      },
+      function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var recipientId = body.recipient_id;
+          var messageId = body.message_id;
 
-  console.log(
-    "MENSAJEEEE",messageData
-  )
-  await axios.post(url, messageData)
-    .then(function (response) {
-     console.log(response.data)
-      if (response.status == 200) {
-        var recipientId = response.data.recipient_id;
-        var messageId = response.data.message_id;
-        console.log(messageId)
-        if (messageId) {
-          console.log(
-            "Successfully sent message with id %s to recipient %s",
-            messageId,
-            recipientId
-          );
+          if (messageId) {
+            console.log(
+              "Successfully sent message with id %s to recipient %s",
+              messageId,
+              recipientId
+            );
+          } else {
+            console.log(
+              "Successfully called Send API for recipient %s",
+              recipientId
+            );
+          }
+          resolve();
         } else {
-          console.log(
-            "Successfully called Send API for recipient %s",
-            recipientId
+          reject();
+          console.error(
+            "Failed calling Send API",
+            response.statusCode,
+            response.statusMessage,
+            body.error
           );
         }
-      }else{
-        console.log("error!!!")
       }
-    })
-    .catch(function (error) {
-      console.log("HEADERS: ",error);
-    });
-};
+    );
+  });
+}
 
 const isDefined = (obj) => {
   if (typeof obj == "undefined") {
