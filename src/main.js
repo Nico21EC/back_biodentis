@@ -96,7 +96,7 @@ app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
-app.get("/webhook", function (req, res) {
+app.get("/messenger/webhook", function (req, res) {
   console.log(req);
   if (
     req.query["hub.mode"] === "subscribe" &&
@@ -121,7 +121,7 @@ app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
 });
 
-app.post("/webhook/", function (req, res) {
+app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
   // Make sure this is a page subscription
   if (data.object == "page") {
