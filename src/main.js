@@ -147,6 +147,7 @@ app.post("/messenger/webhook/", function (req, res) {
 });
 
 function receivedMessage(event) {
+  console.log("EVENTTTTTT",event)
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
