@@ -149,8 +149,7 @@ app.listen(port, () => {
 
 app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
-
-  console.log("post data object: page".req.body);
+  console.log("post data object: page",req.body);
   if (data.object == "page") {
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
