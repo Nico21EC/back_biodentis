@@ -120,7 +120,7 @@ app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
-router.get("/messenger/webhook", function (req, res) {
+app.get("/messenger/webhook", function (req, res) {
   console.log(req);
   if (
     req.query["hub.mode"] === "subscribe" &&
@@ -147,7 +147,7 @@ app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
 });
 
-router.post("/messenger/webhook/", function (req, res) {
+app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
 
   console.log("post data object: page".req.body);
