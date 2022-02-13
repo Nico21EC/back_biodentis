@@ -166,7 +166,7 @@ app.post("/messenger/webhook/", function (req, res) {
   }
 });
 */
-
+/*
 async function receivedMessage(event) {
   console.log("EVENTTTTTT", event)
   var senderId = event.sender.id;
@@ -511,4 +511,4 @@ async function receivedMessage(event) {
       await callSendAPI(messageData);
     }  
   }
-};
+};*/
