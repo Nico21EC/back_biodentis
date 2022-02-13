@@ -156,7 +156,9 @@ app.post("/messenger/webhook/", function (req, res) {
         console.log("PAGE ENTRY MESSAGING:", messagingEvent.message)
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
+          console.log("Entrando al if", messagingEvent.message);
         } else if (messagingEvent.postback) {
+          console.log("Entrando al else if", messagingEvent.postback);
           receivedPostback(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
