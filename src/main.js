@@ -9,11 +9,12 @@ const apiai = require("apiai");
 const request = require("request");
 const { structProtoToJson } = require("./dialogflow/structFunctions.js");
 const dialogflow = require("./dialogflow/dialogflow.js");
+const config = require("./config/config.js")
 
 const mongooseMain = require('mongoose');
 
 //Import Config file
-const config = require("./config/config.js")
+
 
 const cors = require('cors');
 
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 });
 
 // Messenger API parameters
+/*
 if (!config.FB_PAGE_TOKEN) {
   throw new Error("missing FB_PAGE_TOKEN");
 }
@@ -58,7 +60,7 @@ if (!config.FB_APP_SECRET) {
   throw new Error("missing FB_APP_SECRET");
 }
 
-const sessionIds = new Map();
+const sessionIds = new Map();*/
 
 mongooseMain.connect(
   "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
@@ -122,6 +124,7 @@ app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
+/*
 app.get("/messenger/webhook", function (req, res) {
   console.log(req);
   if (
@@ -135,20 +138,13 @@ app.get("/messenger/webhook", function (req, res) {
     console.error("Failed validation. Make sure the validation tokens match.");
     res.sendStatus(403);
   }
-});
-
-/*
-const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
-  language: "es",
-  requestSource: "fb"
-});
-
-const sessionIds = new Map();*/
+});*/
 
 app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
 });
 
+/*
 app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
   //console.log("POST DATA OBJECT: page",req.body);
@@ -169,10 +165,10 @@ app.post("/messenger/webhook/", function (req, res) {
     });
   }
 });
+*/
 
 async function receivedMessage(event) {
   console.log("EVENTTTTTT", event)
-
   var senderId = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
@@ -189,24 +185,6 @@ async function receivedMessage(event) {
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
 
-  /*
-  if (!sessionIds.has(senderID)) {
-    sessionIds.set(senderID, uuid);
-  }
-
-  var messageId = message.mid;
-  var appId = message.app_id;
-  var metadata = message.metadata;
-  
-  var messageText = message.text;
-  var messageAttachments = message.attachments;
-  var quickReply = message.quick_reply;
-
-  if (messageText) {
-    sendToApiAi(senderID, messageText);
-  } else if (messageAttachments) {
-    handleMessageAttachments(messageAttachments, senderID);
-  }*/
   if (isEcho) {
     handleEcho(messageId, appId, metadata);
     return;
@@ -218,17 +196,7 @@ async function receivedMessage(event) {
   if (messageText) {
     console.log("MENSAJE DEL USUARIO: ", messageText);
     await sendToDialogFlow(senderId, messageText);
-    /*
-  } else if (messageAttachments) {
-    handleMessageAttachments(messageAttachments, senderId);
-  }*/
   };
-
-  /*
-  NO SE USA 
-  function handleMessageAttachments(messageAttachments, senderId) {
-    sendTextMessage(senderId, "Archivo adjunto recibido... gracias! .");
-  };*/
 
   async function setSessionAndUser(senderId) {
     try {
@@ -362,7 +330,6 @@ async function receivedMessage(event) {
     } else if (isDefined(messages)) {
       handleMessages(messages, sender);
     } else if (responseText == "" && !isDefined(action)) {
-      //dialogflow could not evaluate input.
       sendTextMessage(sender, "No entiendo lo que trataste de decir ...");
     } else if (isDefined(responseText)) {
       sendTextMessage(sender, responseText);
@@ -387,24 +354,6 @@ async function receivedMessage(event) {
     }
   }
 
-
-  /*
-  function sendToApiAi(sender, text) {
-    sendTypingOn(sender);
-    let apiaiRequest = apiAiService.textRequest(text, {
-      sessionId: sessionIds.get(sender)
-    });
-    apiaiRequest.on("response", response => {
-      if (isDefined(response.result)) {
-        handleApiAiResponse(sender, response);
-      } else {
-        console.log("NO ENVIAAAAA")
-      }
-    });
-    apiaiRequest.on("error", error => console.error(error));
-    apiaiRequest.end();
-  };*/
-
   function sendTypingOn(recipientId) {
     var messageData = {
       recipient: {
@@ -415,57 +364,7 @@ async function receivedMessage(event) {
     callSendAPI(messageData);
   };
 
-  /*
-  const callSendAPI = async (messageData) => {
-    const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
-  
-    console.log(
-      "MENSAJEEEE",messageData
-    )
-    await axios.post(url, messageData)
-      .then(function (response) {
-       console.log(response.data)
-        if (response.status == 200) {
-          var recipientId = response.data.recipient_id;
-          var messageId = response.data.message_id;
-          console.log(messageId)
-          if (messageId) {
-            console.log(
-              "Successfully sent message with id %s to recipient %s",
-              messageId,
-              recipientId
-            );
-          } else {
-            console.log(
-              "Successfully called Send API for recipient %s",
-              recipientId
-            );
-          }
-        }else{
-          console.log("error!!!")
-        }
-      })
-      .catch(function (error) {
-        console.log("HEADERS: ",error);
-      });
-  };
-  */
-
   function callSendAPI(messageData) {
-    /**
-     *const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
-  
-    console.log(
-      "MENSAJEEEE",messageData
-    )
-    await axios.post(url, messageData)
-      .then(function (response) {
-      const config_axios = {
-          method: 'post',
-          url: "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN,
-          headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
-      }
-      let res = axios(config_axios, messageData)*/
     console.log("call send API", messageData);
     return new Promise((resolve, reject) => {
       request(
@@ -476,7 +375,6 @@ async function receivedMessage(event) {
           },
           method: "POST",
           json: messageData,
-          //header: { 'Access-Control-Allow-Headers': 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method' },
         },
         function (error, response, body) {
           if (!error && response.statusCode == 200)
@@ -611,18 +509,6 @@ async function receivedMessage(event) {
         },
       };
       await callSendAPI(messageData);
-    }
-
-    /*
-    function handleApiAiAction(sender, action, responseText, contexts, parameters) {
-      switch (action) {
-        case "send-text":
-          var responseText = "This is example of Text message."
-          sendTextMessage(sender, responseText);
-          break;
-        default:
-          //unhandled action, just send back the text
-          sendTextMessage(sender, responseText);
-      }*/
+    }  
   }
 };

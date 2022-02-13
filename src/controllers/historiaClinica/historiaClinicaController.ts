@@ -1,6 +1,5 @@
 'üse strict'
 
-
 var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel.ts');
 var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
 var paciente_id;
