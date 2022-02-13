@@ -479,7 +479,8 @@ async function receivedMessage(event) {
           //header: { 'Access-Control-Allow-Headers': 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method' },
         },
         function (error, response, body) {
-          if (!error && response.statusCode == 200) {
+          if (!error && response.statusCode == 200)
+           {
             var recipientId = body.recipient_id;
             var messageId = body.message_id;
             if (messageId) {
