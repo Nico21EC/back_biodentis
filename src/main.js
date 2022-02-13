@@ -7,6 +7,7 @@ const uuid = require("uuid");
 const axios = require("axios");
 const apiai = require("apiai");
 const request = require("request");
+const { structProtoToJson } = require("./dialogflow/structFunctions.js");
 
 const mongooseMain = require('mongoose');
 
@@ -155,7 +156,7 @@ app.post("/messenger/webhook/", function (req, res) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
       pageEntry.messaging.forEach(function (messagingEvent) {
-        console.log("PAGE ENTRY MESSAGING:",messagingEvent.message)
+        console.log("PAGE ENTRY MESSAGING:", messagingEvent.message)
         if (messagingEvent.message) {
           receivedMessage(messagingEvent);
         } else if (messagingEvent.postback) {
@@ -168,13 +169,26 @@ app.post("/messenger/webhook/", function (req, res) {
   }
 });
 
-function receivedMessage(event) {
+async function receivedMessage(event) {
   console.log("EVENTTTTTT", event)
-  var senderID = event.sender.id;
+
+  var senderId = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
+  console.log("Received message for user %d and page %d at %d with message:", senderId, recipientID, timeOfMessage);
+
+  var isEcho = message.is_echo;
+  var messageId = message.mid;
+  var appId = message.app_id;
+  var metadata = message.metadata;
+
+  var messageText = message.text;
+  var messageAttachments = message.attachments;
+  var quickReply = message.quick_reply;
+
+  /*
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid);
   }
@@ -182,110 +196,238 @@ function receivedMessage(event) {
   var messageId = message.mid;
   var appId = message.app_id;
   var metadata = message.metadata;
+  
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  var quickReply = message.quick_reply;
+
   if (messageText) {
     sendToApiAi(senderID, messageText);
   } else if (messageAttachments) {
     handleMessageAttachments(messageAttachments, senderID);
+  }*/
+  if (isEcho) {
+    handleEcho(messageId, appId, metadata);
+    return;
+  } else if (quickReply) {
+    handleQuickReply(senderId, quickReply, messageId);
+    return;
   }
-};
 
-function sendToApiAi(sender, text) {
-  sendTypingOn(sender);
-  let apiaiRequest = apiAiService.textRequest(text, {
-    sessionId: sessionIds.get(sender)
-  });
-  apiaiRequest.on("response", response => {
-    if (isDefined(response.result)) {
-      handleApiAiResponse(sender, response);
-    } else {
-      console.log("NO ENVIAAAAA")
-    }
-  });
-  apiaiRequest.on("error", error => console.error(error));
-  apiaiRequest.end();
-};
-
-const sendTypingOn = (recipientId) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "typing_on"
+  if (messageText) {
+    console.log("MENSAJE DEL USUARIO: ", messageText);
+    await sendToDialogFlow(senderId, messageText);
+    /*
+  } else if (messageAttachments) {
+    handleMessageAttachments(messageAttachments, senderId);
+  }*/
   };
-  callSendAPI(messageData);
-};
 
-/*
-const callSendAPI = async (messageData) => {
-  const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
+  /*
+  NO SE USA 
+  function handleMessageAttachments(messageAttachments, senderId) {
+    sendTextMessage(senderId, "Archivo adjunto recibido... gracias! .");
+  };*/
 
-  console.log(
-    "MENSAJEEEE",messageData
-  )
-  await axios.post(url, messageData)
-    .then(function (response) {
-     console.log(response.data)
-      if (response.status == 200) {
-        var recipientId = response.data.recipient_id;
-        var messageId = response.data.message_id;
-        console.log(messageId)
-        if (messageId) {
-          console.log(
-            "Successfully sent message with id %s to recipient %s",
-            messageId,
-            recipientId
-          );
-        } else {
-          console.log(
-            "Successfully called Send API for recipient %s",
-            recipientId
-          );
-        }
-      }else{
-        console.log("error!!!")
+  async function setSessionAndUser(senderId) {
+    try {
+      if (!sessionIds.has(senderId)) {
+        sessionIds.set(senderId, uuid.v1());
       }
-    })
-    .catch(function (error) {
-      console.log("HEADERS: ",error);
-    });
-};
-*/
-
-function callSendAPI(messageData) {
-  /**
-   *const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
-
-  console.log(
-    "MENSAJEEEE",messageData
-  )
-  await axios.post(url, messageData)
-    .then(function (response) {
-   
-
-    const config_axios = {
-        method: 'post',
-        url: "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN,
-        headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
+    } catch (error) {
+      throw error;
     }
-    let res = axios(config_axios, messageData)*/
-  console.log("call send API", messageData);
-  return new Promise((resolve, reject) => {
-    request(
-      {
-        uri: "https://graph.facebook.com/v6.0/me/messages",
-        qs: {
-          access_token: config.FB_PAGE_TOKEN,
-        },
-        method: "POST",
-        json: messageData,
-        header: { 'Access-Control-Allow-Headers': 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method' },
+  }
+
+  async function handleQuickReply(senderId, quickReply, messageId) {
+    let quickReplyPayload = quickReply.payload;
+    console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
+    this.elements = a;
+    sendToDialogFlow(senderId, quickReplyPayload);
+  }
+
+  async function handleDialogFlowAction(sender, action, messages, contexts, parameters) {
+    switch (action) {
+      default:
+        handleMessages(messages, sender);
+    }
+  }
+
+  async function handleMessage(message, sender) {
+    switch (message.message) {
+      case "text": // text
+        for (const text of message.text.text) {
+          if (text !== "") {
+            await sendTextMessage(sender, text);
+          }
+        }
+        break;
+      case "quickReplies": // quick replies
+        let replies = [];
+        message.quickReplies.quickReplies.forEach((text) => {
+          let reply = {
+            content_type: "text",
+            title: text,
+            payload: text,
+          };
+          replies.push(reply);
+        });
+        await sendQuickReply(sender, message.quickReplies.title, replies);
+        break;
+      case "image": // image
+        await sendImageMessage(sender, message.image.imageUri);
+        break;
+      case "payload":
+        let desestructPayload = structProtoToJson(message.payload);
+        var messageData = {
+          recipient: {
+            id: sender,
+          },
+          message: desestructPayload.facebook,
+        };
+        await callSendAPI(messageData);
+        break;
+      default:
+        break;
+    }
+  }
+
+  async function handleMessages(messages, sender) {
+    try {
+      let i = 0;
+      let cards = [];
+      while (i < messages.length) {
+        switch (messages[i].message) {
+          case "card":
+            for (let j = i; j < messages.length; j++) {
+              if (messages[j].message === "card") {
+                cards.push(messages[j]);
+                i += 1;
+              } else j = 9999;
+            }
+            //await handleCardMessages(cards, sender);
+            cards = [];
+            break;
+          case "text":
+            await handleMessage(messages[i], sender);
+            break;
+          case "image":
+            await handleMessage(messages[i], sender);
+            break;
+          case "quickReplies":
+            await handleMessage(messages[i], sender);
+            break;
+          case "payload":
+            await handleMessage(messages[i], sender);
+            break;
+          default:
+            break;
+        }
+        i += 1;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function sendToDialogFlow(senderId, messageText) {
+    sendTypingOn(senderId);
+    try {
+      let result;
+      setSessionAndUser(senderId);
+      let session = sessionIds.get(senderId);
+      result = await dialogflow.sendToDialogFlow(
+        messageText,
+        session,
+        "FACEBOOK"
+      );
+      handleDialogFlowResponse(senderId, result);
+    } catch (error) {
+      console.log("salio mal en sendToDialogflow...", error);
+    }
+  }
+
+  function handleDialogFlowResponse(sender, response) {
+    let responseText = response.fulfillmentMessages.fulfillmentText;
+    let messages = response.fulfillmentMessages;
+    let action = response.action;
+    let contexts = response.outputContexts;
+    let parameters = response.parameters;
+
+    sendTypingOff(sender);
+
+    if (isDefined(action)) {
+      handleDialogFlowAction(sender, action, messages, contexts, parameters);
+    } else if (isDefined(messages)) {
+      handleMessages(messages, sender);
+    } else if (responseText == "" && !isDefined(action)) {
+      //dialogflow could not evaluate input.
+      sendTextMessage(sender, "No entiendo lo que trataste de decir ...");
+    } else if (isDefined(responseText)) {
+      sendTextMessage(sender, responseText);
+    }
+  }
+
+  async function getUserData(senderId) {
+    console.log("consiguiendo datos del usuario...");
+    let access_token = config.FB_PAGE_TOKEN;
+    try {
+      let userData = await axios.get(
+        "https://graph.facebook.com/v6.0/" + senderId,
+        {
+          params: {
+            access_token,
+          },
+        }
+      );
+      return userData.data;
+    } catch (err) {
+      console.log("algo salio mal en axios getUserData: ", err);
+    }
+  }
+
+
+  /*
+  function sendToApiAi(sender, text) {
+    sendTypingOn(sender);
+    let apiaiRequest = apiAiService.textRequest(text, {
+      sessionId: sessionIds.get(sender)
+    });
+    apiaiRequest.on("response", response => {
+      if (isDefined(response.result)) {
+        handleApiAiResponse(sender, response);
+      } else {
+        console.log("NO ENVIAAAAA")
+      }
+    });
+    apiaiRequest.on("error", error => console.error(error));
+    apiaiRequest.end();
+  };*/
+
+  function sendTypingOn(recipientId) {
+    var messageData = {
+      recipient: {
+        id: recipientId
       },
-      function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          var recipientId = body.recipient_id;
-          var messageId = body.message_id;
+      sender_action: "typing_on"
+    };
+    callSendAPI(messageData);
+  };
+
+  /*
+  const callSendAPI = async (messageData) => {
+    const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
+  
+    console.log(
+      "MENSAJEEEE",messageData
+    )
+    await axios.post(url, messageData)
+      .then(function (response) {
+       console.log(response.data)
+        if (response.status == 200) {
+          var recipientId = response.data.recipient_id;
+          var messageId = response.data.message_id;
+          console.log(messageId)
           if (messageId) {
             console.log(
               "Successfully sent message with id %s to recipient %s",
@@ -298,90 +440,191 @@ function callSendAPI(messageData) {
               recipientId
             );
           }
-          resolve();
-        } else {
-          reject();
-          console.error(
-            "Failed calling Send API",
-            response.statusCode,
-            response.statusMessage,
-            body.error
-          );
+        }else{
+          console.log("error!!!")
         }
+      })
+      .catch(function (error) {
+        console.log("HEADERS: ",error);
+      });
+  };
+  */
+
+  function callSendAPI(messageData) {
+    /**
+     *const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
+  
+    console.log(
+      "MENSAJEEEE",messageData
+    )
+    await axios.post(url, messageData)
+      .then(function (response) {
+      const config_axios = {
+          method: 'post',
+          url: "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN,
+          headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
       }
-    );
-  });
-}
-
-const isDefined = (obj) => {
-  if (typeof obj == "undefined") {
-    return false;
+      let res = axios(config_axios, messageData)*/
+    console.log("call send API", messageData);
+    return new Promise((resolve, reject) => {
+      request(
+        {
+          uri: "https://graph.facebook.com/v6.0/me/messages",
+          qs: {
+            access_token: config.FB_PAGE_TOKEN,
+          },
+          method: "POST",
+          json: messageData,
+          //header: { 'Access-Control-Allow-Headers': 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method' },
+        },
+        function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            var recipientId = body.recipient_id;
+            var messageId = body.message_id;
+            if (messageId) {
+              console.log(
+                "Successfully sent message with id %s to recipient %s",
+                messageId,
+                recipientId
+              );
+            } else {
+              console.log(
+                "Successfully called Send API for recipient %s",
+                recipientId
+              );
+            }
+            resolve();
+          } else {
+            reject();
+            console.error(
+              "Failed calling Send API",
+              response.statusCode,
+              response.statusMessage,
+              body.error
+            );
+          }
+        }
+      );
+    });
   }
-  if (!obj) {
-    return false;
-  }
-  return obj != null;
-};
 
-function handleApiAiResponse(sender, response) {
-  let responseText = response.result.fulfillment.speech;
-  let responseData = response.result.fulfillment.data;
-  let messages = response.result.fulfillment.messages;
-  let action = response.result.action;
-  let contexts = response.result.contexts;
-  let parameters = response.result.parameters;
-  sendTypingOff(sender);
-  if (responseText == "" && !isDefined(action)) {
-    //api ai could not evaluate input.
-    console.log("Unknown query" + response.result.resolvedQuery);
-    sendTextMessage(
-      sender,
-      "I’m not sure what you want. Can you be more specific?"
-    );
-  } else if (isDefined(action)) {
-    handleApiAiAction(sender, action, responseText, contexts, parameters);
-  } else if (isDefined(responseData) && isDefined(responseData.facebook)) {
-    try {
-      console.log("Response as formatted message" + responseData.facebook);
-      sendTextMessage(sender, responseData.facebook);
-    } catch (err) {
-      sendTextMessage(sender, err.message);
+  async function receivedPostback(event) {
+    var senderId = event.sender.id;
+    var recipientID = event.recipient.id;
+    var timeOfPostback = event.timestamp;
+    var payload = event.postback.payload;
+    switch (payload) {
+      default:
+        sendToDialogFlow(senderId, payload);
+        break;
     }
-  } else if (isDefined(responseText)) {
-    sendTextMessage(sender, responseText);
+    console.log("Received postback for user %d and page %d with payload '%s' " + "at %d", senderId, recipientID, payload, timeOfPostback);
   }
-};
 
-const sendTypingOff = (recipientId) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    sender_action: "typing_off"
-  };
-  callSendAPI(messageData);
-};
+  function isDefined(obj) {
+    if (typeof obj == "undefined") {
+      return false;
+    }
+    if (!obj) {
+      return false;
+    }
+    return obj != null;
+  }
 
-const sendTextMessage = async (recipientId, text) => {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: text
+
+  function handleApiAiResponse(sender, response) {
+    let responseText = response.result.fulfillment.speech;
+    let responseData = response.result.fulfillment.data;
+    let messages = response.result.fulfillment.messages;
+    let action = response.result.action;
+    let contexts = response.result.contexts;
+    let parameters = response.result.parameters;
+    sendTypingOff(sender);
+    if (responseText == "" && !isDefined(action)) {
+      //api ai could not evaluate input.
+      console.log("Unknown query" + response.result.resolvedQuery);
+      sendTextMessage(
+        sender,
+        "I’m not sure what you want. Can you be more specific?"
+      );
+    } else if (isDefined(action)) {
+      handleApiAiAction(sender, action, responseText, contexts, parameters);
+    } else if (isDefined(responseData) && isDefined(responseData.facebook)) {
+      try {
+        console.log("Response as formatted message" + responseData.facebook);
+        sendTextMessage(sender, responseData.facebook);
+      } catch (err) {
+        sendTextMessage(sender, err.message);
+      }
+    } else if (isDefined(responseText)) {
+      sendTextMessage(sender, responseText);
     }
   };
-  await callSendAPI(messageData);
-}
 
-function handleApiAiAction(sender, action, responseText, contexts, parameters) {
-  switch (action) {
-    case "send-text":
-      var responseText = "This is example of Text message."
-      sendTextMessage(sender, responseText);
-      break;
-    default:
-      //unhandled action, just send back the text
-      sendTextMessage(sender, responseText);
+
+  function sendTypingOff(recipientId) {
+    var messageData = {
+      recipient: {
+        id: recipientId,
+      },
+      sender_action: "typing_off",
+    };
+    callSendAPI(messageData);
+  }
+
+
+  async function sendTextMessage(recipientId, text) {
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: {
+        text: text
+      }
+    };
+    await callSendAPI(messageData);
+  }
+
+  async function sendGenericMessage(recipientId, elements) {
+    var messageData = {
+      recipient: {
+        id: recipientId,
+      },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: elements,
+          },
+        },
+      },
+    };
+
+    async function sendQuickReply(recipientId, text, replies, metadata) {
+      var messageData = {
+        recipient: {
+          id: recipientId,
+        },
+        message: {
+          text: text,
+          metadata: isDefined(metadata) ? metadata : "",
+          quick_replies: replies,
+        },
+      };
+      await callSendAPI(messageData);
+    }
+
+    /*
+    function handleApiAiAction(sender, action, responseText, contexts, parameters) {
+      switch (action) {
+        case "send-text":
+          var responseText = "This is example of Text message."
+          sendTextMessage(sender, responseText);
+          break;
+        default:
+          //unhandled action, just send back the text
+          sendTextMessage(sender, responseText);
+      }*/
   }
 };
