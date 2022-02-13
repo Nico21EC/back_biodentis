@@ -98,11 +98,6 @@ app.get("/messenger", (req, res) => {
 
 app.get("/messenger/webhook", function (req, res) {
   console.log(req);
-  //res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-  //res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  //res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Content-Type','application/json');
   if (
     req.query["hub.mode"] === "subscribe" &&
     req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
@@ -127,11 +122,6 @@ app.listen(port, () => {
 });
 
 app.post("/messenger/webhook/", function (req, res) {
-  //res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-  //res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  //res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Content-Type','application/json');
   var data = req.body;
   // Make sure this is a page subscription
   if (data.object == "page") {
