@@ -99,7 +99,7 @@ app.get("/webhook", function (req, res) {
 });
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
-  language: "es",
+  language: "en",
   requestSource: "fb"
 });
 
