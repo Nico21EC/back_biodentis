@@ -200,6 +200,7 @@ const callSendAPI = async (messageData) => {
   )
   await axios.post(url, messageData)
     .then(function (response) {
+     console.log(res.data)
       if (response.status == 200) {
         var recipientId = response.data.recipient_id;
         var messageId = response.data.message_id;
