@@ -222,7 +222,7 @@ const callSendAPI = async (messageData) => {
       }
     })
     .catch(function (error) {
-      console.log("HEADERS: ",error.response.headers);
+      console.log("HEADERS: ",error);
     });
 };
 
