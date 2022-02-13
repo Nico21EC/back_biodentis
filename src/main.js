@@ -97,7 +97,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/webhook", function (req, res) {
-  console.log("request");
+  console.log(req);
   if (
     req.query["hub.mode"] === "subscribe" &&
     req.query["hub.verify_token"] === config.FB_VERIFY_TOKEN
@@ -153,7 +153,7 @@ function receivedMessage(event) {
   var message = event.message;
 
   if (!sessionIds.has(senderID)) {
-    sessionIds.set(senderID, uuid.v1());
+    sessionIds.set(senderID, uuid);
   }
 
   var messageId = message.mid;
