@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 // Messenger API parameters
-/*
+
 if (!config.FB_PAGE_TOKEN) {
   throw new Error("missing FB_PAGE_TOKEN");
 }
@@ -60,7 +60,7 @@ if (!config.FB_APP_SECRET) {
   throw new Error("missing FB_APP_SECRET");
 }
 
-const sessionIds = new Map();*/
+const sessionIds = new Map();
 
 mongooseMain.connect(
   "mongodb+srv://nicolOnt:Imsherlock1854*@cluster0.emxpv.mongodb.net/Biodentis?retryWrites=true&w=majority",
@@ -144,7 +144,7 @@ app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
 });
 
-/*
+
 app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
   //console.log("POST DATA OBJECT: page",req.body);
@@ -165,8 +165,8 @@ app.post("/messenger/webhook/", function (req, res) {
     });
   }
 });
-*/
-/*
+
+
 async function receivedMessage(event) {
   console.log("EVENTTTTTT", event)
   var senderId = event.sender.id;
@@ -511,4 +511,4 @@ async function receivedMessage(event) {
       await callSendAPI(messageData);
     }  
   }
-};*/
+};
