@@ -124,7 +124,7 @@ app.get("/messenger", (req, res) => {
   return res.send("Chatbot Funcionando 🤖🤖🤖");
 });
 
-/*
+
 app.get("/messenger/webhook", function (req, res) {
   console.log(req);
   if (
@@ -138,7 +138,7 @@ app.get("/messenger/webhook", function (req, res) {
     console.error("Failed validation. Make sure the validation tokens match.");
     res.sendStatus(403);
   }
-});*/
+});
 
 app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
