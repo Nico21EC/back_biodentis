@@ -178,7 +178,7 @@ function sendToApiAi(sender, text) {
     if (isDefined(response.result)) {
       handleApiAiResponse(sender, response);
     }else{
-      console.log("NO ENVIAAAAA ERORRR")
+      console.log("NO ENVIAAAAA")
     }
   });
   apiaiRequest.on("error", error => console.error(error));
@@ -195,9 +195,54 @@ const sendTypingOn = (recipientId) => {
   callSendAPI(messageData);
 };
 
+/*
+const callSendAPI = async (messageData) => {
+  const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
+
+  console.log(
+    "MENSAJEEEE",messageData
+  )
+  await axios.post(url, messageData)
+    .then(function (response) {
+     console.log(response.data)
+      if (response.status == 200) {
+        var recipientId = response.data.recipient_id;
+        var messageId = response.data.message_id;
+        console.log(messageId)
+        if (messageId) {
+          console.log(
+            "Successfully sent message with id %s to recipient %s",
+            messageId,
+            recipientId
+          );
+        } else {
+          console.log(
+            "Successfully called Send API for recipient %s",
+            recipientId
+          );
+        }
+      }else{
+        console.log("error!!!")
+      }
+    })
+    .catch(function (error) {
+      console.log("HEADERS: ",error);
+    });
+};
+*/
+
 function callSendAPI(messageData) {
+  /**
+   *const url = "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN;
+
+  console.log(
+    "MENSAJEEEE",messageData
+  )
+  await axios.post(url, messageData)
+    .then(function (response) {
+   */
   return new Promise((resolve, reject) => {
-    request(
+    axios(
       {
         uri: "https://graph.facebook.com/v6.0/me/messages",
         qs: {
@@ -205,6 +250,7 @@ function callSendAPI(messageData) {
         },
         method: "POST",
         json: messageData,
+        header: ('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'),
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
