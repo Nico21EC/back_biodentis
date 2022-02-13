@@ -6,6 +6,7 @@ const app = express();
 const uuid = require("uuid");
 const axios = require("axios");
 const apiai = require("apiai");
+const request = require("request");
 
 const mongooseMain = require('mongoose');
 
@@ -241,16 +242,15 @@ function callSendAPI(messageData) {
   )
   await axios.post(url, messageData)
     .then(function (response) {
-   */
+   
 
     const config_axios = {
         method: 'post',
         url: "https://graph.facebook.com/v3.0/me/messages?access_token=" + config.FB_PAGE_TOKEN,
         headers: {'Authorization': `Basic `+ config.GOOGLE_PRIVATE_KEY}
     }
-    let res = axios(config_axios, messageData)
+    let res = axios(config_axios, messageData)*/
   return new Promise((resolve, reject)  => {
-    /*
     request(
       {
         uri: "https://graph.facebook.com/v6.0/me/messages",
@@ -259,8 +259,8 @@ function callSendAPI(messageData) {
         },
         method: "POST",
         json: messageData,
-        header: {'Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'},
-      },*/
+        header: {'Access-Control-Allow-Headers':'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method'},
+      },
       res,
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -290,7 +290,7 @@ function callSendAPI(messageData) {
           );
         }
       }
-    //);
+    );
   });
 }
 
