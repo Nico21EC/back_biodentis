@@ -356,6 +356,7 @@ async function receivedMessage(event) {
     }
   }
 
+
   function sendTypingOn(recipientId) {
     var messageData = {
       recipient: {
