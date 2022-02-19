@@ -375,6 +375,7 @@ async function receivedMessage(event) {
           qs: {access_token: config.FB_PAGE_TOKEN,},
           method: "POST",
           json: messageData,
+          
         },
         function (error, response, body) {
           console.log("")
