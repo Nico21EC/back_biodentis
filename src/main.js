@@ -152,6 +152,7 @@ app.post("/messenger/webhook/", function (req, res) {
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
+      console.log("VARIABLE DE MENSAJE",pageEntry.messaging)
       pageEntry.messaging.forEach(function (messagingEvent) {
         console.log("PAGE ENTRY MESSAGING:", messagingEvent.message)
         if (messagingEvent.message) {
