@@ -32,7 +32,7 @@ if (!config.FB_APP_SECRET) {
 
 const sessionIds = new Map();
 
-/*
+
 exports.facebookValidacion = (req, res) => {
   console.log(req);
   if (
@@ -46,7 +46,7 @@ exports.facebookValidacion = (req, res) => {
     console.error("Failed validation. Make sure the validation tokens match.");
     res.sendStatus(403);
   }
-}*/
+}
 //.................................
 
 exports.postFacebook = (req, res) => {
