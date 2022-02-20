@@ -152,20 +152,20 @@ app.post("/messenger/webhook/", function (req, res) {
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
-      console.log("VARIABLE DE MENSAJE",pageEntry.messaging)
       pageEntry.messaging.forEach(function (messagingEvent) {
         console.log("PAGE ENTRY MESSAGING:", messagingEvent.message)
-        if (messagingEvent.message) {
-          receivedMessage(messagingEvent);
-          console.log("Entrando al if", messagingEvent.message);
-        } else if (messagingEvent.postback) {
-          console.log("Entrando al else if", messagingEvent.postback);
+        if (messagingEvent.postback) {
+          console.log("Entrando al if de PAGE ENTRY");
           receivedPostback(messagingEvent);
+        } else if (messagingEvent.message) {
+          console.log("Entrando al if else de PAGE ENTRY");
+          receivedMessage(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
       });
     });
+    res.sendStatus(200);
   }
 });
 
