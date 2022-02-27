@@ -212,9 +212,7 @@ async function receivedMessage(event) {
 
   async function handleQuickReply(senderId, quickReply, messageId) {
     let quickReplyPayload = quickReply.payload;
-    let a = ""
     console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
-    this.elements = a;
     sendToDialogFlow(senderId, quickReplyPayload);
   }
 
@@ -302,6 +300,45 @@ async function receivedMessage(event) {
     }
   }
 
+  async function handleCardMessages(messages, sender) {
+    let elements = [];
+    for (let m = 0; m < messages.length; m++) {
+      let message = messages[m];
+      let buttons = [];
+      for (let b = 0; b < message.card.buttons.length; b++) {
+        let isLink = message.card.buttons[b].postback.substring(0, 4) === "http";
+        let button;
+        if (isLink) {
+          button = {
+            type: "web_url",
+            title: message.card.buttons[b].text,
+            url: message.card.buttons[b].postback,
+          };
+        } else {
+          button = {
+            type: "postback",
+            title: message.card.buttons[b].text,
+            payload:
+              message.card.buttons[b].postback === ""
+                ? message.card.buttons[b].text
+                : message.card.buttons[b].postback,
+          };
+        }
+        buttons.push(button);
+      }
+  
+      let element = {
+        title: message.card.title,
+        image_url: message.card.imageUri,
+        subtitle: message.card.subtitle,
+        buttons,
+      };
+      elements.push(element);
+    }
+    await sendGenericMessage(sender, elements);
+  }
+
+  
   async function sendToDialogFlow(senderId, messageText) {
     sendTypingOn(senderId);
     try {
@@ -475,6 +512,7 @@ async function receivedMessage(event) {
     };
     await callSendAPI(messageData);
   }
+
 
   async function sendGenericMessage(recipientId, elements) {
     var messageData = {

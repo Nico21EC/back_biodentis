@@ -180,7 +180,7 @@ async function receivedMessage(event) {
     };
     await callSendAPI(messageData);
   }
-  
+
   async function handleMessages(messages, sender) {
     try {
       let i = 0;
@@ -218,6 +218,8 @@ async function receivedMessage(event) {
       console.log(error);
     }
   }
+
+  
 
   async function sendToDialogFlow(senderId, messageText) {
     sendTypingOn(senderId);
