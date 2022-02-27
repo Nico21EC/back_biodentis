@@ -338,6 +338,22 @@ async function receivedMessage(event) {
     await sendGenericMessage(sender, elements);
   }
 
+  async function sendImageMessage(recipientId, imageUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId,
+      },
+      message: {
+        attachment: {
+          type: "image",
+          payload: {
+            url: imageUrl,
+          },
+        },
+      },
+    };
+    await callSendAPI(messageData);
+  }
   
   async function sendToDialogFlow(senderId, messageText) {
     sendTypingOn(senderId);
