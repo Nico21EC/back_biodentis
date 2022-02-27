@@ -15,7 +15,6 @@ const mongooseMain = require('mongoose');
 
 //Import Config file
 
-
 const cors = require('cors');
 
 app.use(express.static("public"));
