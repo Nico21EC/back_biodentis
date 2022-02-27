@@ -164,6 +164,23 @@ async function receivedMessage(event) {
     }
   }
 
+  async function sendImageMessage(recipientId, imageUrl) {
+    var messageData = {
+      recipient: {
+        id: recipientId,
+      },
+      message: {
+        attachment: {
+          type: "image",
+          payload: {
+            url: imageUrl,
+          },
+        },
+      },
+    };
+    await callSendAPI(messageData);
+  }
+  
   async function handleMessages(messages, sender) {
     try {
       let i = 0;

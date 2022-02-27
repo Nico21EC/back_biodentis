@@ -276,7 +276,7 @@ async function receivedMessage(event) {
                 i += 1;
               } else j = 9999;
             }
-            //await handleCardMessages(cards, sender);
+            await handleCardMessages(cards, sender);
             cards = [];
             break;
           case "text":
