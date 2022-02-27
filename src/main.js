@@ -212,6 +212,7 @@ async function receivedMessage(event) {
 
   async function handleQuickReply(senderId, quickReply, messageId) {
     let quickReplyPayload = quickReply.payload;
+    let a = ""
     console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
     this.elements = a;
     sendToDialogFlow(senderId, quickReplyPayload);
