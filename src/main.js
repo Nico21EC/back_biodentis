@@ -9,9 +9,11 @@ const apiai = require("apiai");
 const request = require("request");
 const { structProtoToJson } = require("./dialogflow/structFunctions.js");
 const dialogflow = require("./dialogflow/dialogflow.js");
-const config = require("./config/config.js")
-
+const config = require("./config/config.js");
 const mongooseMain = require('mongoose');
+
+//mongodb models
+const chatBotCita = require("./dialogflow/citaFacebookModel.ts");
 
 //Import Config file
 
@@ -36,6 +38,11 @@ app.use((req, res, next) => {
 });
 
 // Messenger API parameters
+/*
+chatBotCita.find({},(err,res) =>{
+  console.log(res);
+});
+*/
 
 if (!config.FB_PAGE_TOKEN) {
   throw new Error("missing FB_PAGE_TOKEN");
@@ -170,7 +177,6 @@ app.post("/messenger/webhook/", function (req, res) {
 
 
 async function receivedMessage(event) {
-  console.log("EVENTTTTTT", event)
   var senderId = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
@@ -195,10 +201,27 @@ async function receivedMessage(event) {
     return;
   }
 
+  saveUserData(senderId);
+
   if (messageText) {
     console.log("MENSAJE DEL USUARIO: ", messageText);
     await sendToDialogFlow(senderId, messageText);
   };
+
+  function saveUserData(facebookId){
+    let userData = await getUserData(facebookId);
+    let chatbotFacebook = new chatBotCita({
+      nombre: userData.nombre,
+      apellido: userData.apellido,
+      fecha:userData.fecha,
+      hora: userData.hora
+    });
+    chatbotFacebook.save((err, res) => {
+      if (err) return console.log(err);
+      console.log("ingreso a save", res);
+    });
+
+  }
 
   async function setSessionAndUser(senderId) {
     try {
@@ -407,6 +430,12 @@ async function receivedMessage(event) {
       return userData.data;
     } catch (err) {
       console.log("algo salio mal en axios getUserData: ", err);
+      return {
+        nombre: "",
+        apellido: "",
+        fecha: "",
+        hora: ""
+      }
     }
   }
 
