@@ -444,7 +444,7 @@ async function receivedMessage(event) {
             if (messageId) {
               //Aqui estan los datos messageData
               console.log("call send API aaqui", messageData);
-              console.log("mensaje de intent", messageData.text);
+              console.log("mensaje de intent", messageData.message.text);
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
               console.log("Successfully called Send API for recipient %s", recipientId);
