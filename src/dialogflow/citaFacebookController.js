@@ -307,12 +307,12 @@ async function receivedMessage(event) {
             
             if (messageId) {
               console.log("call send API aaqui", messageData);
-              console.log("meesaage:", message_id)
+              console.log("meesaage:", body)
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
+              console.log("meesaage:", body)
               console.log(
-                "Successfully called Send API for recipient %s",
-                recipientId
+                "Successfully called Send API for recipient %s",  recipientId
               );
             }
             resolve();
