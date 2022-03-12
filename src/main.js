@@ -175,7 +175,6 @@ app.post("/messenger/webhook/", function (req, res) {
   }
 });
 
-
 async function receivedMessage(event) {
   
   var senderId = event.sender.id;
