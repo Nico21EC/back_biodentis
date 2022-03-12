@@ -87,7 +87,7 @@ async function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
-  //se usa para imprimir    nxnjsnjn 
+  
   if (isEcho) {
     handleEcho(messageId, appId, metadata);
     return;
@@ -158,6 +158,7 @@ async function receivedMessage(event) {
           message: desestructPayload.facebook,
         };
         await callSendAPI(messageData);
+        
         break;
       default:
         break;
@@ -287,7 +288,8 @@ async function receivedMessage(event) {
   };
 
   function callSendAPI(messageData) {
-    console.log("call send API", messageData);
+    console.log("call send API aaqui", messageData);
+
     return new Promise((resolve, reject) => {
       request(
         {
