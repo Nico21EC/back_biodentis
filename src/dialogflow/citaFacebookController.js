@@ -288,9 +288,8 @@ async function receivedMessage(event) {
   };
 
   function callSendAPI(messageData) {
-    console.log("call send API aaqui", messageData);
-
     return new Promise((resolve, reject) => {
+      
       request(
         {
           uri: "https://graph.facebook.com/v6.0/me/messages",
@@ -305,6 +304,8 @@ async function receivedMessage(event) {
            {
             var recipientId = body.recipient_id;
             var messageId = body.message_id;
+            console.log("call send API aaqui", messageData);
+            console.log("meesaage:", message_id)
             if (messageId) {
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
