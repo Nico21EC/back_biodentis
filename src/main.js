@@ -11,8 +11,9 @@ const { structProtoToJson } = require("./dialogflow/structFunctions.js");
 const dialogflow = require("./dialogflow/dialogflow.js");
 const config = require("./config/config.js");
 const mongooseMain = require('mongoose');
-const {WebhookClient} = require('dialogflow-fulfillment');
-const {Card, Suggestion} = require('dialogflow-fulfillment');
+const { WebhookClient } = require('dialogflow-fulfillment');
+const { Card, Suggestion } = require('dialogflow-fulfillment');
+var EsquemaCitaFacebookModel = require('../dialogflow/citaFacebookModel.ts');
 
 //mongodb models
 const chatBotCita = require("./dialogflow/citaFacebookModel.ts");
@@ -40,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 // Messenger API parameters
-chatBotCita.find({},(err,res) =>{
+chatBotCita.find({}, (err, res) => {
   console.log(res);
 });
 
@@ -176,7 +177,7 @@ app.post("/messenger/webhook/", function (req, res) {
 });
 
 async function receivedMessage(event) {
-  
+
   var senderId = event.sender.id;
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
@@ -332,7 +333,7 @@ async function receivedMessage(event) {
         }
         buttons.push(button);
       }
-  
+
       let element = {
         title: message.card.title,
         image_url: message.card.imageUri,
@@ -360,7 +361,7 @@ async function receivedMessage(event) {
     };
     await callSendAPI(messageData);
   }
-  
+
   async function sendToDialogFlow(senderId, messageText) {
     sendTypingOn(senderId);
     try {
@@ -426,19 +427,19 @@ async function receivedMessage(event) {
     callSendAPI(messageData);
   };
 
-   function callSendAPI(messageData)  {
+  function callSendAPI(messageData) {
     console.log("call send API", messageData);
-     return new Promise(async (resolve, reject)  => {
+    return new Promise(async (resolve, reject) => {
       await request(
         {
           uri: "https://graph.facebook.com/v6.0/me/messages",
-          qs: {access_token: config.FB_PAGE_TOKEN,},
+          qs: { access_token: config.FB_PAGE_TOKEN, },
           method: "POST",
           json: messageData,
         },
         function (error, response, body) {
           console.log("")
-          if (!error && response.statusCode == 200){
+          if (!error && response.statusCode == 200) {
             var recipientId = body.recipient_id;
             var messageId = body.message_id;
             if (messageId) {
@@ -447,9 +448,11 @@ async function receivedMessage(event) {
               console.log("mensaje de intent", messageData.message.text);
               var palabra = "Felicidades"
               var index = messageData.message.text.indexOf(palabra)
-              if(index >= 0){
-                console.log("Felicidad detectada")
-              }else{
+              if (index >= 0) {
+                console.log("Felicidad detectada", index)
+                console.log(messageData.message.text[1])
+                //sendDataMongo(messageData.message.text[1],)
+              } else {
                 console.log("mensaje cualquiera")
               }
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
@@ -459,7 +462,7 @@ async function receivedMessage(event) {
             resolve();
           } else {
             reject();
-            console.error("Failed calling Send API", response.statusCode, response.statusMessage,body.error);
+            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
           }
         }
       );
@@ -488,7 +491,6 @@ async function receivedMessage(event) {
     }
     return obj != null;
   }
-
 
   function handleApiAiResponse(sender, response) {
     let responseText = response.result.fulfillment.speech;
@@ -519,7 +521,6 @@ async function receivedMessage(event) {
     }
   };
 
-
   function sendTypingOff(recipientId) {
     var messageData = {
       recipient: {
@@ -529,7 +530,6 @@ async function receivedMessage(event) {
     };
     callSendAPI(messageData);
   }
-
 
   async function sendTextMessage(recipientId, text) {
     var messageData = {
@@ -542,7 +542,6 @@ async function receivedMessage(event) {
     };
     await callSendAPI(messageData);
   }
-
 
   async function sendGenericMessage(recipientId, elements) {
     var messageData = {
@@ -572,6 +571,25 @@ async function receivedMessage(event) {
         },
       };
       await callSendAPI(messageData);
-    }  
+    }
+  }
+
+  function sendDataMongo(nombre, apellido, fecha, hora) {
+    const citaFacebook = new EsquemaCitaFacebookModel();
+    citaFacebook.nombre = nombre;
+    citaFacebook.apellido = apellido;
+    citaFacebook.fecha = fecha;
+    citaFacebook.hora = hora;
+
+    citaFacebook.save().then((result) => {
+      if (result) {
+        res.send(result);
+      } else {
+        res.status(400).json({ message: 'Error al enviar cita Facebook' });
+      }
+    })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
   }
 };
