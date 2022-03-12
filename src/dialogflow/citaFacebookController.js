@@ -87,7 +87,7 @@ async function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
-
+  //se usa para imprimir
   if (isEcho) {
     handleEcho(messageId, appId, metadata);
     return;
