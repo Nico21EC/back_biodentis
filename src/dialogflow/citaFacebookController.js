@@ -23,6 +23,7 @@ if (!config.DF_LANGUAGE_CODE) {
 if (!config.GOOGLE_CLIENT_EMAIL) {
   throw new Error("missing GOOGLE_CLIENT_EMAIL");
 }
+
 if (!config.GOOGLE_PRIVATE_KEY) {
   throw new Error("missing GOOGLE_PRIVATE_KEY");
 }
