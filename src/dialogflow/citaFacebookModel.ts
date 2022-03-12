@@ -1,7 +1,6 @@
 'use strict'
 const mongoose21 = require("mongoose");
 const Schema21 = mongoose21.Schema;
-
 const citaFacebookEsquema = new Schema21({
     nombre: {
         type: String,
@@ -31,3 +30,5 @@ const citaFacebookEsquema = new Schema21({
     });
 
 module.exports = mongoose21.model('CitaFacebook', citaFacebookEsquema);
+
+//CitaFacebook
