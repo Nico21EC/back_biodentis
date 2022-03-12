@@ -445,6 +445,13 @@ async function receivedMessage(event) {
               //Aqui estan los datos messageData
               console.log("call send API aaqui", messageData);
               console.log("mensaje de intent", messageData.message.text);
+              var palabra = "Felicidades"
+              var index = messageData.message.text.indexOf(palabra)
+              if(index >= 0){
+                console.log("Felicidad detectada")
+              }else{
+                console.log("mensaje cualquiera")
+              }
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
               console.log("Successfully called Send API for recipient %s", recipientId);
