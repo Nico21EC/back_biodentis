@@ -11,6 +11,8 @@ const { structProtoToJson } = require("./dialogflow/structFunctions.js");
 const dialogflow = require("./dialogflow/dialogflow.js");
 const config = require("./config/config.js");
 const mongooseMain = require('mongoose');
+const {WebhookClient} = require('dialogflow-fulfillment');
+const {Card, Suggestion} = require('dialogflow-fulfillment');
 
 //mongodb models
 const chatBotCita = require("./dialogflow/citaFacebookModel.ts");
@@ -41,7 +43,6 @@ app.use((req, res, next) => {
 chatBotCita.find({},(err,res) =>{
   console.log(res);
 });
-
 
 if (!config.FB_PAGE_TOKEN) {
   throw new Error("missing FB_PAGE_TOKEN");
@@ -416,7 +417,6 @@ async function receivedMessage(event) {
     }
   }
 
-
   function sendTypingOn(recipientId) {
     var messageData = {
       recipient: {
@@ -436,7 +436,6 @@ async function receivedMessage(event) {
           qs: {access_token: config.FB_PAGE_TOKEN,},
           method: "POST",
           json: messageData,
-          
         },
         function (error, response, body) {
           console.log("")
