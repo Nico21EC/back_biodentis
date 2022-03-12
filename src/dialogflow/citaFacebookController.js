@@ -304,9 +304,10 @@ async function receivedMessage(event) {
            {
             var recipientId = body.recipient_id;
             var messageId = body.message_id;
-            console.log("call send API aaqui", messageData);
-            console.log("meesaage:", message_id)
+            
             if (messageId) {
+              console.log("call send API aaqui", messageData);
+              console.log("meesaage:", message_id)
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
               console.log(
