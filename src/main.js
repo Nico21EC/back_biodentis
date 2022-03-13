@@ -154,16 +154,17 @@ app.listen(port, () => {
 var cita_fb = false
 app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
-  
+
   //console.log("POST DATA OBJECT: page",req.body);
   if (data.object == "page") {
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
       pageEntry.messaging.forEach(function (messagingEvent) {
-        if (messagingEvent.message.text == "Cita"){
+        if (messagingEvent.message.text == "Cita") {
           cita_fb = true
-          console.log("Cita en verdadero")
+        }else{
+          cita_fb = false
         }
         console.log("PAGE ENTRY MESSAGING:", messagingEvent.message)
         if (messagingEvent.postback) {
@@ -452,20 +453,17 @@ async function receivedMessage(event) {
               //Aqui estan los datos messageData
               console.log("call send API aaqui", messageData);
               console.log("mensaje de intent", messageData.message.text);
-              if (cita_fb)  {
-                console.log("entranndo a true de cita")
+              if (cita_fb) {
+                var palabra = "Felicidades"
+                var index = messageData.message.text.indexOf(palabra)
+                if (index >= 0) {
+                  console.log("Felicidad detectada", index)
+                  console.log(messageData.message.text[1])
+                  //sendDataMongo(messageData.message.text[1],)
+                } else {
+                  console.log("mensaje cualquiera")
+                }
               }
-              /*
-              var palabra = "Felicidades"
-              var index = messageData.message.text.indexOf(palabra)
-
-              if (index >= 0) {
-                console.log("Felicidad detectada", index)
-                console.log(messageData.message.text[1])
-                //sendDataMongo(messageData.message.text[1],)
-              } else {
-                console.log("mensaje cualquiera")
-              }*/
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
               console.log("Successfully called Send API for recipient %s", recipientId);
@@ -585,7 +583,7 @@ async function receivedMessage(event) {
     }
   }
 
-  
+
   function sendDataMongo(nombre, apellido, fecha, hora) {
     const citaFacebook = new EsquemaCitaFacebookModel();
     citaFacebook.nombre = nombre;
