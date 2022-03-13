@@ -151,18 +151,24 @@ app.listen(port, () => {
   console.log('Escuchando peticiones en el puerto', port);
 });
 
-
+var cita_fb = false
 app.post("/messenger/webhook/", function (req, res) {
   var data = req.body;
+  
   //console.log("POST DATA OBJECT: page",req.body);
   if (data.object == "page") {
     data.entry.forEach(function (pageEntry) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
       pageEntry.messaging.forEach(function (messagingEvent) {
+        if (messagingEvent.message.text == "Cita"){
+          cita_fb = true
+          console.log("Cita en verdadero")
+        }
         console.log("PAGE ENTRY MESSAGING:", messagingEvent.message)
         if (messagingEvent.postback) {
           console.log("Entrando al if de PAGE ENTRY");
+
           receivedPostback(messagingEvent);
         } else if (messagingEvent.message) {
           console.log("Entrando al if else de PAGE ENTRY");
@@ -446,6 +452,9 @@ async function receivedMessage(event) {
               //Aqui estan los datos messageData
               console.log("call send API aaqui", messageData);
               console.log("mensaje de intent", messageData.message.text);
+              if (cita_fb)  {
+                console.log("entranndo a true de cita")
+              }
               /*
               var palabra = "Felicidades"
               var index = messageData.message.text.indexOf(palabra)
