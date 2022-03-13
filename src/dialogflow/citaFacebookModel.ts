@@ -12,7 +12,7 @@ const citaFacebookEsquema = new Schema21({
         require: false,
     },
     fecha: {
-        type: Date,
+        type: String,
         require: true,
     },
     hora:{

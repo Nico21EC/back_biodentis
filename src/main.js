@@ -588,7 +588,7 @@ async function receivedMessage(event) {
     const citaFacebook = new EsquemaCitaFacebookModel();
     citaFacebook.nombre = nombre;
     citaFacebook.apellido = apellido;
-    citaFacebook.fecha = new Date(fecha);
+    citaFacebook.fecha = fecha;
     citaFacebook.hora = hora;
 
     citaFacebook.save().then((result) => {
