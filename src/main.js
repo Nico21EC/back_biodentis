@@ -455,6 +455,7 @@ async function receivedMessage(event) {
               console.log("mensaje de intent", messageData.message.text);
               if (cita_fb) {
                 console.log("Entrando al if de cita")
+                /*
                 var palabra = "Felicidades"
                 var index = messageData.message.text.indexOf(palabra)
                 if (index >= 0) {
@@ -463,7 +464,7 @@ async function receivedMessage(event) {
                   //sendDataMongo(messageData.message.text[1],)
                 } else {
                   console.log("mensaje cualquiera")
-                }
+                }*/
               }
               console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
             } else {
