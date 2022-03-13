@@ -13,6 +13,14 @@ costo:{
     type: String,
     require: true,
 },
+abono:{
+    type: String,
+    require: true,
+},
+saldo:{
+    type: String,
+    require: true,
+},
 sesiones:{
     type: String,
     require: true
@@ -21,7 +29,6 @@ diagnostico:{
     type: Schema14.Types.ObjectId,
     ref: 'Diagnostico'
 },
-
 },
 {
     timestamps:true

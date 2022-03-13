@@ -17,7 +17,7 @@ exports.createPaciente = async (req, res) => {
   pacientenew.fechaNacimiento = req.body.fechaNacimiento;
   pacientenew.correo = req.body.correo;
 
-  pacientenew.save().then((result) => {
+  await pacientenew.save().then((result) => {
     if (result) {
       res.send(result);
     } else {
@@ -30,7 +30,7 @@ exports.createPaciente = async (req, res) => {
 };
 
 exports.paciente = (req, res) => {
-  EsquemaPaciente.findOne({ _id: req.params.id }).exec(function (err, pac) {
+  EsquemaPaciente.findOne({ _id: req.params.id }).populate('odontogramas').exec(function (err, pac) {
     res.status(200).send(pac);
   });
 };
@@ -56,7 +56,6 @@ exports.cambioDatos = (req, res) => {
       console.log(correo);
       console.log(celular);
       console.log(direccion);
-
       if (direccion || celular || correo) {
         res.status(201).json(pac);
       } else {
@@ -119,3 +118,8 @@ EsquemaPaciente.find({$or: [{nombre:{ $regex: '.*' + name + '.*' }}, {numCedula:
     });
 }
 
+exports.odontoPaciente = (req, res) => {
+  EsquemaPaciente.find({ odontogramas: req.params.id }).exec(function (err, odonto) {
+      res.status(200).send(odonto);
+  });
+};

@@ -8,7 +8,6 @@ exports.creatediagnostico = async (req, res) => {
     const diagnosticonew = new Esquema();
     diagnosticonew.diagnostico = req.body.diagnostico;
     diagnosticonew.odontograma = req.body.odontograma;
-
     EsquemaOdontograma.findOne({ _id: diagnosticonew.odontograma }, (err, odonto) => {
         if (odonto) {
             diagnosticonew.odontograma = req.body.odontograma;
@@ -33,7 +32,14 @@ exports.creatediagnostico = async (req, res) => {
 };
 
 exports.diagnosticoOdonto = (req, res) => {
-    Esquema.find({odontograma:req.params.id}).exec(function (err, odonto) {
-      res.status(200).send(odonto);
+    //Encuentra el diagnostico por id del odontograma
+    Esquema.find({ odontograma: req.params.id }).populate('tratamientos').exec(function (err, odonto) {
+        res.status(200).send(odonto);
     });
-  };
+};
+
+exports.OdontoDiagnostico = (req, res) => {
+    Esquema.find({ _id: req.params.id }).populate('odontograma').exec(function (err, odonto) {
+        res.status(200).send(odonto);
+    });
+};

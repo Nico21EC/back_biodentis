@@ -2,6 +2,10 @@ const Tratamiento=require('../../controllers/tratamiento/tratamientoController.t
 
 module.exports = (router) =>{
     router.post('/crearTratamiento', Tratamiento.createTratamiento);
-    //router.get('/citas', Cita.citas);
-    //router.put('/actulizaCita/:id', Cita.cambioCita);
+    router.get('/verTratamientos/:id', Tratamiento.tratamiento);
+    router.get('/verSeguimiento/:id', Tratamiento.seguimiento);
+    router.post('/crearSeguimiento', Tratamiento.createSeguimiento);
+    router.get('/pacienteSeg/:id', Tratamiento.pacienteSeguimiento);
+    router.put('/cambioDatosSeguimiento/:id', Tratamiento.cambioDatos);
+    router.put('/actualizarTratamiento/:id', Tratamiento.actualSegTrat);
 }

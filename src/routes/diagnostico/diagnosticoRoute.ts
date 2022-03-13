@@ -2,8 +2,6 @@ const Diagnostico=require('../../controllers/diagnostico/diagnosticoController.t
 
 module.exports = (router) =>{
     router.post('/crearDiagnostico', Diagnostico.creatediagnostico);
-    //router.get('/citas', Cita.citas);
-    //router.put('/actulizaCita/:id', Cita.cambioCita);
     router.get('/diagnosticosOdont/:id', Diagnostico.diagnosticoOdonto);
-
+    router.get('/odontoDiagnostico/:id', Diagnostico.OdontoDiagnostico)
 }

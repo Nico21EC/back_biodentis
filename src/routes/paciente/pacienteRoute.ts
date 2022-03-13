@@ -7,6 +7,5 @@ module.exports = (router) => {
     router.get('/paciente/:id', Paciente.paciente);
     router.get('/pacientepag/:page/:num', Paciente.PaginacionPaciente);
     router.post('/buscarPaciente', Paciente.buscarPaciente);
-
-
+    router.get('/odontoPaciente/:id', Paciente.odontoPaciente);
 }

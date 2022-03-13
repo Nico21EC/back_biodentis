@@ -1,5 +1,6 @@
 'üse strict'
 
+
 var EsquemaHistoria = require('../../model/historiaClinica/historiaClinicaModel.ts');
 var EsquemaPaciente = require('../../model/paciente/pacienteModel.ts');
 var paciente_id;
@@ -37,6 +38,7 @@ exports.createHistoria = (req, res) => {
   }
   )
 };
+
 exports.historias = (req, res) => {
   EsquemaHistoria.find({}).populate('recetas').populate('tratamientos').populate('paciente').exec(function (err, historia) {
     res.status(200).send(historia);

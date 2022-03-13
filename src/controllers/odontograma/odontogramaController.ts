@@ -20,5 +20,14 @@ exports.createOdontograma = (req, res) => {
     });
   }).catch((error) => {
     res.status(500).json({ error });
+    console.log("Catch 500 odontograma")
   });
 };
+
+exports.odontograma = (req, res) => {
+  Esquema.findOne({ _id: req.params.id }).populate('diagnostico').exec(function (err, odontograma) {
+    res.status(200).send(odontograma);
+  });
+};
+
+
