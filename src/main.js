@@ -584,7 +584,7 @@ async function receivedMessage(event) {
   }
 
 
-  function sendDataMongo(nombre, apellido, fecha, hora) {
+  function sendDataMongo(nombre, apellido, fecha, hora,res,req) {
     const citaFacebook = new EsquemaCitaFacebookModel();
     citaFacebook.nombre = nombre;
     citaFacebook.apellido = apellido;
