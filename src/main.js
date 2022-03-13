@@ -161,7 +161,7 @@ app.post("/messenger/webhook/", function (req, res) {
       var pageID = pageEntry.id;
       var timeOfEvent = pageEntry.time;
       pageEntry.messaging.forEach(function (messagingEvent) {
-        if (messagingEvent.message.text == "Cita") {
+        if (messagingEvent.message.text == "Informacion") {
           cita_fb = true
         }else{
           cita_fb = false
@@ -453,7 +453,7 @@ async function receivedMessage(event) {
               //Aqui estan los datos messageData
               console.log("call send API aaqui", messageData);
               console.log("mensaje de intent", messageData.message.text);
-              if (cita_fb) {
+              if (cita_fb == false) {
                 console.log("Entrando al if de cita")
                 var palabra = "Felicidades"
                 var index = messageData.message.text.indexOf(palabra)
