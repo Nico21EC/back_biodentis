@@ -574,6 +574,7 @@ async function receivedMessage(event) {
     }
   }
 
+  /*
   function sendDataMongo(nombre, apellido, fecha, hora) {
     const citaFacebook = new EsquemaCitaFacebookModel();
     citaFacebook.nombre = nombre;
@@ -592,4 +593,5 @@ async function receivedMessage(event) {
         res.status(500).json({ error });
       });
   }
+*/
 };
