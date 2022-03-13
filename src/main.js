@@ -457,7 +457,7 @@ async function receivedMessage(event) {
                 var index = messageData.message.text.indexOf(palabra)
                 if (index >= 0) {
                   console.log("Felicidad detectada", index)
-                  mensaje_array =  messageData.message.text.split(" ")
+                  var mensaje_array =  messageData.message.text.split(" ")
                   console.log(mensaje_array)
                   //sendDataMongo(messageData.message.text[1],)
                 } else {
