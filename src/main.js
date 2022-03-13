@@ -13,7 +13,7 @@ const config = require("./config/config.js");
 const mongooseMain = require('mongoose');
 const { WebhookClient } = require('dialogflow-fulfillment');
 const { Card, Suggestion } = require('dialogflow-fulfillment');
-var EsquemaCitaFacebookModel = require('../dialogflow/citaFacebookModel.ts');
+var EsquemaCitaFacebookModel = require('./dialogflow/citaFacebookModel.ts');
 
 //mongodb models
 const chatBotCita = require("./dialogflow/citaFacebookModel.ts");
@@ -574,7 +574,7 @@ async function receivedMessage(event) {
     }
   }
 
-  /*
+  
   function sendDataMongo(nombre, apellido, fecha, hora) {
     const citaFacebook = new EsquemaCitaFacebookModel();
     citaFacebook.nombre = nombre;
@@ -593,5 +593,5 @@ async function receivedMessage(event) {
         res.status(500).json({ error });
       });
   }
-*/
+
 };
