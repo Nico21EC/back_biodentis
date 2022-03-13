@@ -584,13 +584,13 @@ async function receivedMessage(event) {
   }
 
 
-  function sendDataMongo(nombre, apellido, fecha, hora,res,req) {
+  function sendDataMongo(nombre, apellido, fecha, hora) {
     const citaFacebook = new EsquemaCitaFacebookModel();
     citaFacebook.nombre = nombre;
     citaFacebook.apellido = apellido;
     citaFacebook.fecha = fecha;
     citaFacebook.hora = hora;
-
+    async (req, res) => {
     citaFacebook.save().then((result) => {
       if (result) {
         console.log("Entre a guardar")
@@ -603,5 +603,6 @@ async function receivedMessage(event) {
         res.status(500).json({ error });
       });
   }
+}
 
 };
