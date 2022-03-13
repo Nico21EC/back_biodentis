@@ -593,6 +593,7 @@ async function receivedMessage(event) {
 
     citaFacebook.save().then((result) => {
       if (result) {
+        console.log("Entre a guardar")
         res.send(result);
       } else {
         res.status(400).json({ message: 'Error al enviar cita Facebook' });
