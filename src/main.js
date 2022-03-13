@@ -13,7 +13,7 @@ const config = require("./config/config.js");
 const mongooseMain = require('mongoose');
 const { WebhookClient } = require('dialogflow-fulfillment');
 const { Card, Suggestion } = require('dialogflow-fulfillment');
-var EsquemaCitaFacebookModel = require('./dialogflow/citaFacebookModel.ts');
+const EsquemaCitaFacebookModel = require('./dialogflow/citaFacebookModel.ts');
 
 //mongodb models
 const chatBotCita = require("./dialogflow/citaFacebookModel.ts");
@@ -585,24 +585,22 @@ async function receivedMessage(event) {
 
 
   function sendDataMongo(nombre, apellido, fecha, hora) {
-    const citaFacebook = new EsquemaCitaFacebookModel();
-    citaFacebook.nombre = nombre;
-    citaFacebook.apellido = apellido;
-    citaFacebook.fecha = fecha;
-    citaFacebook.hora = hora;
-    async (req, res) => {
-    citaFacebook.save().then((result) => {
-      if (result) {
-        console.log("Entre a guardar")
-        res.send(result);
-      } else {
-        res.status(400).json({ message: 'Error al enviar cita Facebook' });
-      }
-    })
-      .catch((error) => {
-        res.status(500).json({ error });
-      });
-  }
+    const citaFacebook = new EsquemaCitaFacebookModel({
+      nombre : nombre,
+      apellido: apellido,
+      fecha : fecha,
+      hora :hora
+    });
+    
+    citaFacebook.save((err,res)=> { 
+      if (err) {
+     return console.log(err)
+    } else {
+      console.log("CITA FACEBOOK GUARDADA")
+    };
+    }
+  )
+  
 }
 
 };
