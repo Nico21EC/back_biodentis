@@ -452,14 +452,13 @@ async function receivedMessage(event) {
             if (messageId) {
               //Aqui estan los datos messageData
               console.log("call send API aaqui", messageData);
-              console.log("mensaje de intent", messageData.message.text);
               if (cita_fb == false) {
-                console.log("Entrando al if de cita")
                 var palabra = "Felicidades"
                 var index = messageData.message.text.indexOf(palabra)
                 if (index >= 0) {
                   console.log("Felicidad detectada", index)
-                  console.log(messageData.message.text[1])
+                  mensaje_array =  messageData.message.text.split(" ")
+                  console.log(mensaje_array)
                   //sendDataMongo(messageData.message.text[1],)
                 } else {
                   console.log("mensaje cualquiera")
