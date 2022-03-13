@@ -454,6 +454,7 @@ async function receivedMessage(event) {
               console.log("call send API aaqui", messageData);
               console.log("mensaje de intent", messageData.message.text);
               if (cita_fb) {
+                console.log("Entrando al if de cita")
                 var palabra = "Felicidades"
                 var index = messageData.message.text.indexOf(palabra)
                 if (index >= 0) {
