@@ -13,7 +13,7 @@ const citaEsquema = new Schema5({
         require: false,
     },
     fecha: {
-        type: Date,
+        type: String,
         require: true,
 
     },
