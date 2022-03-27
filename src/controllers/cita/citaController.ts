@@ -56,11 +56,8 @@ exports.cambioDatosCita = (req, res) => {
             const fecha = Date.parse(req.body.fecha);
             const hora = req.body.hora;
             console.log(req.body);
-
-
             if (fecha || hora) {
                 res.status(201).json(pac);
-
             } else {
                 response15.status(409).send('Error al actualizar cita');
             }

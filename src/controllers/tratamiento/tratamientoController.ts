@@ -93,7 +93,7 @@ exports.seguimiento = (req, res) => {
 
 exports.cambioDatos = (req, res) => {
     console.log(req.params.id);
-    EsquemaSeguimiento.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, seg) => {
+    EsquemaSeguimiento.findOneAndUpdate({ paciente: req.params.id }, req.body, { new: true }, (err, seg) => {
         if (err) {
             res.status(500).send(err);
         }
