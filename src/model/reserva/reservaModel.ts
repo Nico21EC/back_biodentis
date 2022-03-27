@@ -18,9 +18,7 @@ const reservaEsquema = new Schema13({
     },
     fecha: {
         type: Date,
-        
         require: true,
-
     },
   
     motivo: {

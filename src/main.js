@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 
 // Messenger API parameters
 chatBotCita.find({}, (err, res) => {
-  console.log(res);
+  
 });
 
 if (!config.FB_PAGE_TOKEN) {

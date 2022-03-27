@@ -10,9 +10,10 @@ exports.createTratamiento = async (req, res) => {
     tratamientonew.abono = req.body.abono;
     tratamientonew.saldo = req.body.saldo;
     tratamientonew.sesiones = req.body.sesiones;
+    console.log(req.body)
     await tratamientonew.save().then((result) => {
         console.log(req.body.diagnostico);
-        EsquemaDiagnostico.findOne({ _id: req.body.diagnostico }, (err, diagnostico) => {
+        EsquemaDiagnostico.findOne({ _id: req.body.diagnostico}, (err, diagnostico) => {
             if (diagnostico) {
                 diagnostico.tratamientos.push(tratamientonew);
                 diagnostico.save();
@@ -85,7 +86,7 @@ exports.pacienteSeguimiento = (req, res) => {
 };
 
 exports.seguimiento = (req, res) => {
-    EsquemaSeguimiento.findOne({ _id: req.params.id }).populate('tratamientos').exec(function (err, seg) {
+    EsquemaSeguimiento.findOne({ paciente: req.params.id }).populate('tratamientos').exec(function (err, seg) {
         res.status(200).send(seg);
     });
 };
