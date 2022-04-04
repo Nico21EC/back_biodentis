@@ -44,8 +44,6 @@ exports.cambioDatosReserva = (req, res) => {
             const fecha = Date.parse(req.body.fecha);
             const hora = req.body.hora;
             console.log(req.body);
-
-
             if (fecha || hora) {
                 res.status(201).json(pac);
 
@@ -54,7 +52,6 @@ exports.cambioDatosReserva = (req, res) => {
             }
         }
     })
-
 };
 
 exports.listaReservas = (req, res) => {
@@ -75,3 +72,20 @@ exports.reservaEdit = (req, res) => {
         return res.status(200).json(act); // en este ejemplo se envía el resultado
     });
 }
+
+exports.eliminarReserva = async(req, res) => {
+
+   await  EsquemaOdontograma.deleteOne({ _id: req.params.id }, (err, pac) => {
+        if (err) {
+            res.status(500).send(err);
+        }else{
+            res.json({ message: 'Reserva eliminada' });
+            console.log("Reserva eliminada ")
+        }
+        if (!pac) {
+            return response16.status(404).send('Error al encontrar reserva');
+        }
+    })
+};
+
+
