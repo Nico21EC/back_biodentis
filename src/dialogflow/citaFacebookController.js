@@ -10,7 +10,7 @@ exports.citasFacebook = (req, res) => {
 };
 
 exports.reservaEditFacebook = (req, res) => {
-  EsquemaCitaFacebookModel.findOne({})
+  EsquemaCitaFacebookModel.find({})
   .where({fecha: req.params.fecha})
   .exec((err, act) => {
       if(err) {
