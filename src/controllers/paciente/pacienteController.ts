@@ -70,6 +70,8 @@ exports.PaginacionPaciente = (req, res, next) => {
   console.log(req.params.num);
   let page = Number(req.params.page) || 1;
 
+  //holiii}
+  
   EsquemaPaciente
     .find({}) // finding all documents
     .skip((perPage * page) - perPage) // in the first page the value of the skip is 0
