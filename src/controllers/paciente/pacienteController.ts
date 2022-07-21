@@ -69,9 +69,7 @@ exports.PaginacionPaciente = (req, res, next) => {
   let perPage =Number( req.params.num) ;
   console.log(req.params.num);
   let page = Number(req.params.page) || 1;
-
-  //holiii}
-  
+  console.log("Prueba")
   EsquemaPaciente
     .find({}) // finding all documents
     .skip((perPage * page) - perPage) // in the first page the value of the skip is 0
@@ -79,7 +77,7 @@ exports.PaginacionPaciente = (req, res, next) => {
     .exec((err, pac) => {
       EsquemaPaciente.countDocuments((err, count) => { // count to calculate the number of pages
         if (err){ return next(err);
-        }else{
+        }else{          
           res.json( {
             pac,
             current: page,
@@ -88,6 +86,7 @@ exports.PaginacionPaciente = (req, res, next) => {
           });
         }
         console.log(pac);
+        console.log(res.json)
       });
     });
 };
