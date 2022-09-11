@@ -31,13 +31,13 @@ exports.creatediagnostico = async (req, res) => {
     )
 };
 
+
 exports.diagnosticoOdonto = (req, res) => {
     //Encuentra el diagnostico por id del odontograma
     Esquema.find({ odontograma: req.params.id }).exec(function (err, odonto) {
         res.status(200).send(odonto);
     });
 };
-
 
 
 exports.OdontoDiagnostico = (req, res) => {
